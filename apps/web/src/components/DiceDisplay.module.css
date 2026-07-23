@@ -1,0 +1,34 @@
+.dice {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.dice:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.dice.selected {
+  border-width: 3px;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.3);
+}
+
+.diceDots {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.dot {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: currentColor;
+  transform: translate(-50%, -50%);
+}

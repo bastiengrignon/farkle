@@ -1,0 +1,47 @@
+{
+  "name": "farkle",
+  "version": "1.0.0",
+  "description": "Farkle game",
+  "private": true,
+  "packageManager": "yarn@4.5.0",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "lint:check": "biome check .",
+    "lint:fix": "biome check --apply .",
+    "format": "biome format --write .",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "changeset": "changeset",
+    "changeset-publish": "changeset publish",
+    "release": "turbo run release"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.5",
+    "@changesets/cli": "^2.31.1",
+    "@types/node": "^26.1.1",
+    "tsdown": "^0.22.13",
+    "turbo": "^2.10.6",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bastiengrignon/farkle.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bastiengrignon/farkle/issues"
+  },
+  "homepage": "https://github.com/bastiengrignon/farkle#readme"
+}
