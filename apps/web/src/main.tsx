@@ -13,6 +13,8 @@ import { theme } from './theme';
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 
+import 'mantine-datatable/styles.css';
+
 import './styles/global.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

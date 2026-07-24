@@ -3,6 +3,8 @@ import { createBrowserRouter } from 'react-router';
 import ErrorBoundary from '@pages/ErrorBoundary';
 import Homepage from '@pages/Homepage';
 import Layout from '@pages/Layout';
+import Leaderboard from '@pages/Leaderboard';
+import Rules from '@pages/Rules';
 import Settings from '@pages/Settings';
 
 type Routes = {
@@ -41,13 +43,11 @@ export const router = createBrowserRouter([
       },
       {
         path: routes.history,
-        // element: <GameHistoryPage />,
-        element: <div>history</div>,
+        element: <Leaderboard />,
       },
       {
         path: routes.rules,
-        // element: <GameHistoryPage />,
-        element: <div>Rules</div>,
+        element: <Rules />,
       },
     ],
   },

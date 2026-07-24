@@ -27,7 +27,7 @@ const Settings: FC = () => {
   const { commonPlayers, settingsForm, handleSaveSettings, removeStoredPlayer } = useSettingsHooks();
 
   return (
-    <PageLayout title={t('settings.title')}>
+    <PageLayout title={t('common:home.settings')}>
       <form onSubmit={handleSaveSettings}>
         <Stack>
           <Fieldset legend={t('settings.minimumFirstScore.title')}>
