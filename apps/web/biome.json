@@ -1,0 +1,41 @@
+{
+  "root": false,
+  "extends": "//",
+  "files": {
+    "includes": ["**/*.ts", "**/*.tsx"]
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": {
+          "level": "on",
+          "options": {
+            "groups": [
+              ["react", "react/**", "react-*", "react-*/**"],
+              ":BLANK_LINE:",
+              [
+                ":PACKAGE:",
+                "!@mantine/**",
+                "!mantine-datatable",
+                "!@farkle/**",
+                "!@pages/**",
+                "!@store/**",
+                "!@components/**",
+                "!@hooks/**",
+                "!@constants/**"
+              ],
+              ":BLANK_LINE:",
+              ["@mantine/**", "mantine-datatable"],
+              ":BLANK_LINE:",
+              ["@farkle/**", "@pages/**", "@components/**", "@hooks/**", "@store/**", "@constants/**", ":ALIAS:"],
+              ":BLANK_LINE:",
+              ":PATH:",
+              ":STYLE:"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

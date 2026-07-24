@@ -1,37 +1,25 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
-  "pipeline": {
+
+  "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**", "public/**"]
+      "outputs": ["dist/**", "public/**"]
     },
     "dev": {
       "cache": false,
       "persistent": true
     },
-    "lint": {},
-    "test": {
-      "dependsOn": ["^build"],
-      "outputs": []
-    },
-    "typecheck": {
-      "dependsOn": ["^build"],
-      "outputs": []
-    },
-    "clean": {
+    "//#lint": {},
+    "//#lint:fix": {
       "cache": false
     },
-    "changeset": {
-      "dependsOn": [],
-      "outputs": [".changeset/**"]
+    "test": {
+      "dependsOn": ["^build"]
     },
-    "changeset-publish": {
-      "dependsOn": ["changeset"]
-    },
-    "release": {
-      "dependsOn": ["changeset-publish"],
-      "outputs": []
+    "typecheck": {
+      "dependsOn": ["^typecheck"]
     }
   }
 }

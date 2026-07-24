@@ -1,0 +1,4 @@
+.selectedLanguage {
+  background-color: var(--mantine-color-blue-6) !important;
+  color: var(--mantine-color-white) !important;
+}

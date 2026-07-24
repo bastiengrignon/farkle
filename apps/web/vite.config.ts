@@ -1,52 +1,77 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import { VitePWA } from "vite-plugin-pwa";
-import viteCompression from "vite-plugin-compression";
+import react from '@vitejs/plugin-react';
+import { type AliasOptions, defineConfig } from 'vite';
+import compression from 'vite-plugin-compression2';
+import { type ManifestOptions, VitePWA } from 'vite-plugin-pwa';
+
+import { fileURLToPath } from 'node:url';
+
+const aliases: AliasOptions = [
+  {
+    find: '@components',
+    replacement: fileURLToPath(new URL('./src/components', import.meta.url)),
+  },
+  {
+    find: '@pages',
+    replacement: fileURLToPath(new URL('./src/pages', import.meta.url)),
+  },
+  {
+    find: '@constants',
+    replacement: fileURLToPath(new URL('./src/constants', import.meta.url)),
+  },
+  {
+    find: '@store',
+    replacement: fileURLToPath(new URL('./src/store', import.meta.url)),
+  },
+  {
+    find: '@hooks',
+    replacement: fileURLToPath(new URL('./src/hooks', import.meta.url)),
+  },
+];
+
+const manifestConfig: Partial<ManifestOptions> = {
+  name: 'Farkle Score',
+  short_name: 'Farkle',
+  description: 'A scorekeeper for Farkle game',
+  theme_color: '#1a1a2e',
+  background_color: '#16213e',
+  display: 'standalone',
+  icons: [
+    {
+      src: 'pwa-192x192.png',
+      sizes: '192x192',
+      type: 'image/png',
+    },
+    {
+      src: 'pwa-512x512.png',
+      sizes: '512x512',
+      type: 'image/png',
+    },
+    {
+      src: 'pwa-512x512-maskable.png',
+      sizes: '512x512',
+      type: 'image/png',
+      purpose: 'maskable',
+    },
+  ],
+};
 
 export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: "autoUpdate",
-      includeAssets: [
-        "favicon.ico",
-        "apple-touch-icon.png",
-        "masked-icon.svg",
-      ],
-      manifest: {
-        name: "Farkle Game",
-        short_name: "Farkle",
-        description: "A fun dice game where you roll for points",
-        theme_color: "#1a1a2e",
-        background_color: "#16213e",
-        display: "standalone",
-        icons: [
-          {
-            src: "pwa-192x192.png",
-            sizes: "192x192",
-            type: "image/png",
-          },
-          {
-            src: "pwa-512x512.png",
-            sizes: "512x512",
-            type: "image/png",
-          },
-          {
-            src: "pwa-512x512-maskable.png",
-            sizes: "512x512",
-            type: "image/png",
-            purpose: "maskable",
-          },
-        ],
-      },
+      registerType: 'prompt',
+      injectRegister: 'auto',
+      includeAssets: ['**/*'],
+      manifest: manifestConfig,
       workbox: {
-        globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2}"],
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        cleanupOutdatedCaches: true,
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-            handler: "CacheFirst",
+            handler: 'CacheFirst',
             options: {
-              cacheName: "google-fonts-cache",
+              cacheName: 'google-fonts-cache',
               expiration: {
                 maxEntries: 10,
                 maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
@@ -58,9 +83,9 @@ export default defineConfig({
           },
           {
             urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
-            handler: "CacheFirst",
+            handler: 'CacheFirst',
             options: {
-              cacheName: "gstatic-fonts-cache",
+              cacheName: 'gstatic-fonts-cache',
               expiration: {
                 maxEntries: 10,
                 maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
@@ -72,9 +97,9 @@ export default defineConfig({
           },
           {
             urlPattern: /^https:\/\/cdn\.jsdelivr\.net\/.*/i,
-            handler: "CacheFirst",
+            handler: 'CacheFirst',
             options: {
-              cacheName: "jsdelivr-cache",
+              cacheName: 'jsdelivr-cache',
               expiration: {
                 maxEntries: 20,
                 maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
@@ -87,55 +112,24 @@ export default defineConfig({
         ],
       },
     }),
-    viteCompression({
-      algorithm: "gzip",
-      ext: ".gz",
-      filter: /\.(js|css|json|html|ico|svg|png|jpg|jpeg|woff2?|ttf|eot)$/i,
-      threshold: 10240,
-      deleteOriginFile: false,
+    compression({
+      algorithms: ['gzip', 'brotliCompress'],
     }),
   ],
   resolve: {
-    alias: {
-      "@": "/src",
-      "@farkle/core": "../../packages/core/src/index.ts",
-    },
+    alias: aliases,
   },
   server: {
-    port: 3000,
-    open: true,
-    cors: true,
-  },
-  build: {
-    outDir: "dist",
-    sourcemap: true,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ["react", "react-dom", "react-router-dom"],
-          mantine: ["@mantine/core", "@mantine/hooks", "@mantine/notifications"],
-          icons: ["react-icons", "@tabler/icons-react"],
-          i18n: ["tolgee"],
-          state: ["zustand"],
-          tables: ["mantine-datatable"],
-        },
-      },
+    host: true,
+    port: 5173,
+    watch: {
+      usePolling: true,
     },
   },
-  css: {
-    postcss: {
-      plugins: {
-        "postcss-preset-mantine": {},
-        "postcss-simple-vars": {
-          variables: {
-            "mantine-breakpoint-xs": "36em",
-            "mantine-breakpoint-sm": "48em",
-            "mantine-breakpoint-md": "62em",
-            "mantine-breakpoint-lg": "75em",
-            "mantine-breakpoint-xl": "88em",
-          },
-        },
-      },
+  build: {
+    target: 'esnext',
+    rolldownOptions: {
+      devtools: {},
     },
   },
 });

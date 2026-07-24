@@ -6,7 +6,7 @@ FROM node:20-alpine AS builder-core
 WORKDIR /app
 
 # Copy root package files
-COPY package.json yarn.lock pnpm-workspace.yaml ./
+COPY package.json yarn.lock ./
 
 # Install dependencies
 RUN yarn install --frozen-lockfile
@@ -23,7 +23,7 @@ FROM node:20-alpine AS builder-web
 WORKDIR /app
 
 # Copy root package files
-COPY package.json yarn.lock pnpm-workspace.yaml ./
+COPY package.json yarn.lock ./
 
 # Install dependencies
 RUN yarn install --frozen-lockfile
