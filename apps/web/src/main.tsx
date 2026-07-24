@@ -1,5 +1,4 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: Root is always defined */
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router/dom';
