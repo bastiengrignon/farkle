@@ -1,5 +1,11 @@
 # web
 
+## 1.1.2
+
+### Patch Changes
+
+- Add github actions workflow for building docker image
+
 ## 1.1.1
 
 ### Patch Changes
