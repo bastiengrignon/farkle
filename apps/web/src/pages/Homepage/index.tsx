@@ -3,14 +3,17 @@ import { useTranslation } from 'react-i18next';
 import { TbDice1, TbHelp, TbSettings, TbTrophy } from 'react-icons/tb';
 import { Link } from 'react-router';
 
-import { Button, Container, Group, Paper, Stack, Text, useMantineTheme } from '@mantine/core';
+import { Container, Group, Paper, Stack, Text, useMantineTheme } from '@mantine/core';
 
-import { routes } from '../../router.tsx';
+import ModalNewGame from '@components/ModalNewGame';
 
-export function Homepage() {
+import { routes } from '../../router';
+import { useHomepageHooks } from './Homepage.hooks.ts';
+
+export const Homepage = () => {
   const { t } = useTranslation();
   const theme = useMantineTheme();
-
+  const { openedNewGameModal, openNewGameModal, closeNewGameModal } = useHomepageHooks();
   const features = useMemo(
     () => [
       {
@@ -18,7 +21,7 @@ export function Homepage() {
         // description: t('home.subtitle'),
         icon: TbDice1,
         to: '',
-        onClick: () => {},
+        onClick: openNewGameModal,
         color: 'blue',
       },
       {
@@ -43,43 +46,38 @@ export function Homepage() {
         color: 'grape',
       },
     ],
-    [t]
+    [t, openNewGameModal]
   );
 
   return (
     <Container size="md" py="xl">
-      <Stack align="center" gap="xl">
-        <Button size="xl" radius="md" variant="filled">
-          {t('home.newGame')}
-        </Button>
-
-        <Group gap="md" justify="center">
-          {features.map((feature) => (
-            <Paper
-              key={feature.title}
-              component={Link}
-              to={feature.to}
-              onClick={() => feature?.onClick?.()}
-              radius="md"
-              p="lg"
-              shadow="sm"
-              w={200}
-              style={{
-                borderTop: `4px solid ${theme.colors[feature.color][5]}`,
-              }}
-            >
-              <Stack align="center" gap="sm">
-                <feature.icon size={40} color={theme.colors[feature.color][5]} />
-                <Text size="xl" c={feature.color} ta="center" fw="bold">
-                  {feature.title}
-                </Text>
-              </Stack>
-            </Paper>
-          ))}
-        </Group>
-      </Stack>
+      <Group gap="md" justify="center">
+        {features.map((feature) => (
+          <Paper
+            key={feature.title}
+            component={Link}
+            to={feature.to}
+            onClick={() => feature?.onClick?.()}
+            radius="md"
+            p="lg"
+            shadow="sm"
+            w={200}
+            style={{
+              borderTop: `4px solid ${theme.colors[feature.color][5]}`,
+            }}
+          >
+            <Stack align="center" gap="sm">
+              <feature.icon size={40} color={theme.colors[feature.color][5]} />
+              <Text size="xl" c={feature.color} ta="center" fw="bold">
+                {feature.title}
+              </Text>
+            </Stack>
+          </Paper>
+        ))}
+      </Group>
+      <ModalNewGame opened={openedNewGameModal} close={closeNewGameModal} />
     </Container>
   );
-}
+};
 
 export default Homepage;

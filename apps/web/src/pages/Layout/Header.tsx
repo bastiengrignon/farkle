@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 import { Anchor, Flex, Group, ThemeIcon, Title } from '@mantine/core';
 
 import LanguageSwitcher from '@components/LanguageSwitcher';
-import { useCustomMediaQuery } from '@constants/hooks';
+import { useCustomMediaQuery } from '@hooks/mediaQuery';
 import ColorSwitcher from '@pages/Layout/ColorSwitcher';
 
 import { routes } from '../../router';

@@ -1,20 +1,25 @@
-import type { FC } from 'react';
-import { Outlet } from 'react-router';
+import { type FC, useMemo } from 'react';
+import { Outlet, useNavigation } from 'react-router';
 
-import { AppShell, useComputedColorScheme } from '@mantine/core';
+import { AppShell, LoadingOverlay, useComputedColorScheme } from '@mantine/core';
 
 import { usePWABanner } from '@hooks/PWABanner';
 import Header from '@pages/Layout/Header';
 
 const Layout: FC = () => {
-  const colorScheme = useComputedColorScheme();
   usePWABanner();
+  const colorScheme = useComputedColorScheme();
+  const navigation = useNavigation();
+
+  const isLoading = useMemo(() => navigation.state === 'loading', [navigation.state]);
+
   return (
     <AppShell header={{ height: 60 }} padding="xs" bg={colorScheme === 'dark' ? 'dark.5' : 'gray.2'}>
       <AppShell.Header bg="blue.5" p="xs">
         <Header />
       </AppShell.Header>
-      <AppShell.Main>
+      <AppShell.Main pos="relative">
+        <LoadingOverlay visible={isLoading} zIndex={1000} overlayProps={{ blur: 3 }} />
         <Outlet />
       </AppShell.Main>
     </AppShell>

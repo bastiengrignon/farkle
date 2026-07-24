@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import { BackendFetch, DevTools, I18nextPlugin, Tolgee, withTolgee } from '@tolgee/i18next';
 import i18n from 'i18next';
 
-const NAMESPACES = ['common'];
+const NAMESPACES = ['common', 'settings'];
 export const SUPPORTED_LANGUAGES = ['fr', 'en'] as const;
 
 // type Namespace = (typeof NAMESPACES)[number];
