@@ -14,7 +14,7 @@ interface ModalNewGameProps {
 }
 
 const ModalNewGame: FC<ModalNewGameProps> = ({ opened, close }) => {
-  const { t } = useTranslation('farkle');
+  const { t } = useTranslation('game');
   const { newGameForm, resetFormOnClose, handleSubmitNewGame } = useModalNewGameHooks({ t });
 
   return (

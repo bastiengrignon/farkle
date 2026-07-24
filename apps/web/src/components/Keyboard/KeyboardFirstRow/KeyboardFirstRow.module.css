@@ -1,0 +1,5 @@
+.otherDiceButton {
+  border: 5px solid var(--mantine-color-white);
+  border-radius: var(--mantine-radius-md);
+  padding: var(--mantine-spacing-sm);
+}

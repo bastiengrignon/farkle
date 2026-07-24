@@ -8,12 +8,12 @@ import { Container, Group, Paper, Stack, Text, useMantineTheme } from '@mantine/
 import ModalNewGame from '@components/ModalNewGame';
 
 import { routes } from '../../router';
-import { useHomepageHooks } from './Homepage.hooks.ts';
+import { useHomePageHooks } from './HomePage.hooks.ts';
 
-export const Homepage = () => {
+export const HomePage = () => {
   const { t } = useTranslation();
   const theme = useMantineTheme();
-  const { openedNewGameModal, openNewGameModal, closeNewGameModal } = useHomepageHooks();
+  const { openedNewGameModal, openNewGameModal, closeNewGameModal } = useHomePageHooks();
   const features = useMemo(
     () => [
       {
@@ -80,4 +80,4 @@ export const Homepage = () => {
   );
 };
 
-export default Homepage;
+export default HomePage;

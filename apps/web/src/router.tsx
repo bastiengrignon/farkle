@@ -1,7 +1,8 @@
 import { createBrowserRouter } from 'react-router';
 
 import ErrorBoundary from '@pages/ErrorBoundary';
-import Homepage from '@pages/Homepage';
+import GamePage from '@pages/GamePage';
+import HomePage from '@pages/HomePage';
 import Layout from '@pages/Layout';
 import Leaderboard from '@pages/Leaderboard';
 import Rules from '@pages/Rules';
@@ -30,7 +31,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: routes.home,
-        element: <Homepage />,
+        element: <HomePage />,
       },
       {
         path: routes.settings,
@@ -38,8 +39,7 @@ export const router = createBrowserRouter([
       },
       {
         path: routes.game,
-        // element: <FarkleGamePage />,
-        element: <div>game page</div>,
+        element: <GamePage />,
       },
       {
         path: routes.history,

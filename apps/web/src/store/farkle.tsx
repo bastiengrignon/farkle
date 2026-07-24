@@ -286,8 +286,8 @@ export const useFarkleStore = create<FarkleState>()(
 
             if (isMinimumFirstScoreEnabled && isFirstScore && currentPlayer.previewScore < minimumFirstScoreValue) {
               notifications.show({
-                title: t('game.bank.error.title'),
-                message: t('game.bank.error.message', { minimum: minimumFirstScoreValue }),
+                title: t('bank.error.title'),
+                message: t('bank.error.message', { minimum: minimumFirstScoreValue }),
                 position: 'top-center',
                 color: 'red',
                 autoClose: false,

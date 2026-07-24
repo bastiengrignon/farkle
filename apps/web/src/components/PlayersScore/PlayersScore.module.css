@@ -1,0 +1,22 @@
+.playerScoreContainer {
+  overflow: hidden;
+  cursor: default;
+}
+
+.playerScoreContainerHasHistory {
+  cursor: pointer;
+}
+
+.playerScoreProgressContainer {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100% !important;
+  opacity: 0.8;
+  z-index: 0 !important;
+}
+
+.currentPlayerTurnDice {
+  transform: rotate(-25deg);
+}

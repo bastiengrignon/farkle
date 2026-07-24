@@ -1,6 +1,6 @@
 import { useDisclosure } from '@mantine/hooks';
 
-export const useHomepageHooks = () => {
+export const useHomePageHooks = () => {
   const [openedNewGameModal, { open: openNewGameModal, close: closeNewGameModal }] = useDisclosure(false);
 
   return {
