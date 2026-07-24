@@ -54,7 +54,7 @@ const ScorePreview: FC = () => {
             </Center>
           </Paper>
           <Flex align="center" pos="relative">
-            <ActionIcon pos="absolute" size="xl" ml="md" color="gray" variant="light" onClick={clearPreviewScore}>
+            <ActionIcon pos="absolute" size="xl" ml="md" variant="outline" onClick={clearPreviewScore}>
               <TbLetterC />
             </ActionIcon>
           </Flex>

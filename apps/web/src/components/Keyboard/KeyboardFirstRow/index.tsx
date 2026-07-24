@@ -45,52 +45,66 @@ const KeyboardFirstRow: FC = () => {
             <Title>{t('keyboard.modal.dice', { type: diceType })}</Title>
           </Center>
           <Grid gap="xs" align="center" justify="center">
-            <Grid.Col span={4} align="center">
-              <UnstyledButton onClick={() => handleSetNumberOfDicePoints(1)}>
-                <TbDice1 size={86} />
-              </UnstyledButton>
+            <Grid.Col span={4}>
+              <Center>
+                <UnstyledButton onClick={() => handleSetNumberOfDicePoints(1)}>
+                  <TbDice1 size={86} className={classes.diceColor} />
+                </UnstyledButton>
+              </Center>
             </Grid.Col>
             {diceType === '3' ? (
               <>
-                <Grid.Col span={4} align="center">
-                  <UnstyledButton onClick={() => handleSetNumberOfDicePoints(2)}>
-                    <TbDice2 size={86} />
-                  </UnstyledButton>
+                <Grid.Col span={4}>
+                  <Center>
+                    <UnstyledButton onClick={() => handleSetNumberOfDicePoints(2)}>
+                      <TbDice2 size={86} className={classes.diceColor} />
+                    </UnstyledButton>
+                  </Center>
                 </Grid.Col>
-                <Grid.Col span={4} align="center">
-                  <UnstyledButton onClick={() => handleSetNumberOfDicePoints(3)}>
-                    <TbDice3 size={86} />
-                  </UnstyledButton>
+                <Grid.Col span={4}>
+                  <Center>
+                    <UnstyledButton onClick={() => handleSetNumberOfDicePoints(3)}>
+                      <TbDice3 size={86} className={classes.diceColor} />
+                    </UnstyledButton>
+                  </Center>
                 </Grid.Col>
-                <Grid.Col span={4} align="center">
-                  <UnstyledButton onClick={() => handleSetNumberOfDicePoints(4)}>
-                    <TbDice4 size={86} />
-                  </UnstyledButton>
+                <Grid.Col span={4}>
+                  <Center>
+                    <UnstyledButton onClick={() => handleSetNumberOfDicePoints(4)}>
+                      <TbDice4 size={86} className={classes.diceColor} />
+                    </UnstyledButton>
+                  </Center>
                 </Grid.Col>
-                <Grid.Col span={4} align="center">
-                  <UnstyledButton onClick={() => handleSetNumberOfDicePoints(5)}>
-                    <TbDice5 size={86} />
-                  </UnstyledButton>
+                <Grid.Col span={4}>
+                  <Center>
+                    <UnstyledButton onClick={() => handleSetNumberOfDicePoints(5)}>
+                      <TbDice5 size={86} className={classes.diceColor} />
+                    </UnstyledButton>
+                  </Center>
                 </Grid.Col>
-                <Grid.Col span={4} align="center">
-                  <UnstyledButton onClick={() => handleSetNumberOfDicePoints(6)}>
-                    <TbDice6 size={86} />
-                  </UnstyledButton>
+                <Grid.Col span={4}>
+                  <Center>
+                    <UnstyledButton onClick={() => handleSetNumberOfDicePoints(6)}>
+                      <TbDice6 size={86} className={classes.diceColor} />
+                    </UnstyledButton>
+                  </Center>
                 </Grid.Col>
               </>
             ) : (
-              <Grid.Col span={4} align="center">
-                <UnstyledButton className={classes.otherDiceButton} onClick={() => handleSetNumberOfDicePoints(2)}>
-                  <Flex justify="center">
-                    <TbDice2 />
-                    <TbDice3 />
-                  </Flex>
-                  <Flex>
-                    <TbDice4 />
-                    <TbDice5 />
-                    <TbDice6 />
-                  </Flex>
-                </UnstyledButton>
+              <Grid.Col span={4}>
+                <Center>
+                  <UnstyledButton className={classes.otherDiceButton} onClick={() => handleSetNumberOfDicePoints(2)}>
+                    <Flex justify="center">
+                      <TbDice2 className={classes.diceColor} size={32} />
+                      <TbDice3 className={classes.diceColor} size={32} />
+                    </Flex>
+                    <Flex>
+                      <TbDice4 className={classes.diceColor} size={32} />
+                      <TbDice5 className={classes.diceColor} size={32} />
+                      <TbDice6 className={classes.diceColor} size={32} />
+                    </Flex>
+                  </UnstyledButton>
+                </Center>
               </Grid.Col>
             )}
           </Grid>
