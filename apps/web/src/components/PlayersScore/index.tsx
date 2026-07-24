@@ -57,7 +57,7 @@ const PlayersScore: FC<PlayersScoreProps> = ({ game, turnHistory, onPlayerClick 
                 root: classes.playerScoreProgressContainer,
               }}
             />
-            <Flex justify="space-between" align="center" style={{ position: 'relative', zIndex: 1 }}>
+            <Flex justify="space-between" align="center" className={classes.playerScore}>
               <Group align="center" gap="xs">
                 <Text fw={game.currenPlayerIdTurn === player.id ? 'bold' : 'normal'}>{player.name}</Text>
                 {game.currenPlayerIdTurn === player.id && <TbDice6Filled className={classes.currentPlayerTurnDice} />}

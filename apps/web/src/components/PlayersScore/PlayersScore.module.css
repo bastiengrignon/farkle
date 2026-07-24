@@ -20,3 +20,8 @@
 .currentPlayerTurnDice {
   transform: rotate(-25deg);
 }
+
+.playerScore {
+  position: relative;
+  z-index: 1;
+}
