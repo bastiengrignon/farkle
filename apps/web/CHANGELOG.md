@@ -1,5 +1,11 @@
 # web
 
+## 1.1.1
+
+### Patch Changes
+
+- Update docker build
+
 ## 1.1.0
 
 ### Minor Changes

@@ -1,12 +1,14 @@
+import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router';
 
 import ErrorBoundary from '@pages/ErrorBoundary';
 import GamePage from '@pages/GamePage';
 import HomePage from '@pages/HomePage';
 import Layout from '@pages/Layout';
-import Leaderboard from '@pages/Leaderboard';
-import Rules from '@pages/Rules';
-import Settings from '@pages/Settings';
+
+const Leaderboard = lazy(() => import('@pages/Leaderboard'));
+const Rules = lazy(() => import('@pages/Rules'));
+const Settings = lazy(() => import('@pages/Settings'));
 
 type Routes = {
   home: string;

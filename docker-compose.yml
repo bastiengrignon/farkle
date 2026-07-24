@@ -1,83 +1,11 @@
 version: '3.8'
 
 services:
-  # Web application
   web:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: farkle-web
-    ports:
-      - "3000:80"
-    restart: unless-stopped
-    environment:
-      - NODE_ENV=production
-      - VITE_TOLGEE_API_URL=${VITE_TOLGEE_API_URL:-http://localhost:4000}
-      - VITE_TOLGEE_API_KEY=${VITE_TOLGEE_API_KEY:-}
-    volumes:
-      - ./apps/web/public:/usr/share/nginx/html:ro
-    networks:
-      - farkle-network
-
-  # Development server with hot reload
-  dev:
-    image: node:20-alpine
-    container_name: farkle-dev
-    working_dir: /app
+    container_name: farkle
     ports:
       - "5173:5173"
-    volumes:
-      - .:/app
-      - /app/node_modules
-    command: sh -c "yarn install && yarn dev"
-    environment:
-      - NODE_ENV=development
-      - VITE_TOLGEE_API_URL=${VITE_TOLGEE_API_URL:-http://localhost:4000}
-      - VITE_TOLGEE_API_KEY=${VITE_TOLGEE_API_KEY:-}
-    profiles:
-      - dev
-    networks:
-      - farkle-network
-
-  # Optional: Tolgee translation server (for development)
-  tolgee:
-    image: tolgee/tolgee-server:latest
-    container_name: tolgee-server
-    ports:
-      - "4000:8080"
-    environment:
-      - TOLGEE_SECRET=${TOLGEE_SECRET:-change-me-in-production}
-      - TOLGEE_DB_URL=jdbc:postgresql://postgres:5432/tolgee
-      - TOLGEE_DB_USERNAME=postgres
-      - TOLGEE_DB_PASSWORD=postgres
-    depends_on:
-      - postgres
-    profiles:
-      - tolgee
-    networks:
-      - farkle-network
-
-  # PostgreSQL for Tolgee
-  postgres:
-    image: postgres:15-alpine
-    container_name: tolgee-postgres
-    environment:
-      - POSTGRES_DB=tolgee
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    volumes:
-      - tolgee-data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    profiles:
-      - tolgee
-    networks:
-      - farkle-network
-
-networks:
-  farkle-network:
-    driver: bridge
-
-volumes:
-  tolgee-data:
-    driver: local
+    restart: unless-stopped

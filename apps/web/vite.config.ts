@@ -130,6 +130,26 @@ export default defineConfig({
     target: 'esnext',
     rolldownOptions: {
       devtools: {},
+      output: {
+        codeSplitting: {
+          groups: [
+            {
+              name: (moduleId) => (moduleId.includes('i18next') || moduleId.includes('intl') ? 'i18n' : null),
+              minSize: 100 * 1024,
+            },
+            {
+              name: 'react-vendor',
+              test: /node_modules[\\/]react/,
+              priority: 20,
+            },
+            {
+              name: 'vendor',
+              test: /node_modules/,
+              priority: 10,
+            },
+          ],
+        },
+      },
     },
   },
 });
