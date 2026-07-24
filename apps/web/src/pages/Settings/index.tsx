@@ -20,7 +20,7 @@ import {
 import { TRIPLE_ONE_SCORE_OPTIONS } from '@farkle/core';
 import PageLayout from '@pages/PageLayout';
 
-import { useSettingsHooks } from './Settings.hooks.ts';
+import { useSettingsHooks } from './Settings.hooks';
 
 const Settings: FC = () => {
   const { t } = useTranslation('settings');

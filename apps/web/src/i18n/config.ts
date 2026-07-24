@@ -2,6 +2,7 @@ import { initReactI18next } from 'react-i18next';
 
 import { BackendFetch, DevTools, I18nextPlugin, Tolgee, withTolgee } from '@tolgee/i18next';
 import i18n from 'i18next';
+import ICU from 'i18next-icu';
 
 const NAMESPACES = ['common', 'settings'];
 export const SUPPORTED_LANGUAGES = ['fr', 'en'] as const;
@@ -51,6 +52,7 @@ export const tolgee = Tolgee()
   });
 
 withTolgee(i18n, tolgee)
+  .use(ICU)
   .use(initReactI18next)
   .init({
     lng: 'fr',
@@ -62,3 +64,5 @@ withTolgee(i18n, tolgee)
     },
     appendNamespaceToMissingKey: true,
   });
+
+export default i18n;

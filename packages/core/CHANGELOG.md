@@ -1,5 +1,11 @@
 # @farkle/core
 
+## 1.1.0
+
+### Minor Changes
+
+- Move score logic inside core package
+
 ## 1.0.1
 
 ### Patch Changes

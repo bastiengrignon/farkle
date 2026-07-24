@@ -8,7 +8,7 @@ import { Container, Group, Paper, Stack, Text, useMantineTheme } from '@mantine/
 import ModalNewGame from '@components/ModalNewGame';
 
 import { routes } from '../../router';
-import { useHomePageHooks } from './HomePage.hooks.ts';
+import { useHomePageHooks } from './HomePage.hooks';
 
 export const HomePage = () => {
   const { t } = useTranslation();

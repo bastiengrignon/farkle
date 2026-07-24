@@ -9,7 +9,7 @@ import { DataTable, type DataTableColumn } from 'mantine-datatable';
 import type { FinishedGame } from '@farkle/core';
 import PageLayout from '@pages/PageLayout';
 
-import { useLeaderboardHooks } from './Leaderboard.hooks.ts';
+import { useLeaderboardHooks } from './Leaderboard.hooks';
 
 const Leaderboard: FC = () => {
   const { t } = useTranslation('leaderboard');

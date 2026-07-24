@@ -6,7 +6,7 @@ import { DataTable, type DataTableColumn } from 'mantine-datatable';
 
 import type { Game, TurnResult } from '@farkle/core';
 
-import { useModalTurnHistoryHooks } from './ModalTurnHistory.hooks.ts';
+import { useModalTurnHistoryHooks } from './ModalTurnHistory.hooks';
 
 interface ModalTurnHistoryProps {
   opened: boolean;

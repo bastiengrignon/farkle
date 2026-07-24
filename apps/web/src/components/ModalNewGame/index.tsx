@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { ActionIcon, Button, Flex, Group, Modal, NumberInput, Stack, Switch, Text, TextInput } from '@mantine/core';
 
-import { useModalNewGameHooks } from './ModalNewGame.hooks.ts';
+import { useModalNewGameHooks } from './ModalNewGame.hooks';
 
 interface ModalNewGameProps {
   opened: boolean;

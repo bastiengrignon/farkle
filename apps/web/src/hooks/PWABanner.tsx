@@ -8,7 +8,7 @@ import { Button, Title } from '@mantine/core';
 import { useInterval } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 
-import { semverGreaterThan } from '@constants/version.ts';
+import { semverGreaterThan } from '@constants/version';
 
 import packageJson from '../../package.json';
 
@@ -44,6 +44,4 @@ export const usePWABanner = () => {
     interval.start();
     return interval.stop;
   }, [interval]);
-
-  return null;
 };

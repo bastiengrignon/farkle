@@ -1,77 +1,20 @@
-import type { TFunction } from 'i18next';
 import { devtools, persist } from 'zustand/middleware';
 import { create } from 'zustand/react';
 
 import { notifications } from '@mantine/notifications';
 
-import type { FarkleSettings, FinishedGame, Game, StoredPlayer, TurnResult } from '@farkle/core';
+import {
+  advanceTurn,
+  DEFAULT_FARKLE_SETTINGS,
+  type FarkleState,
+  type FinishedGame,
+  getFinishedGames,
+  getHistory,
+  hasReachedWinningScore,
+  type TurnResult,
+} from '@farkle/core';
 
-export const DEFAULT_FARKLE_SETTINGS: FarkleSettings = {
-  consecutiveFarkle: {
-    enabled: false,
-    scorePenalty: 100,
-  },
-  sixDiceFarkle: {
-    enabled: false,
-    score: 100,
-  },
-  minimumFirstScore: {
-    enabled: true,
-    score: 500,
-  },
-  tripleOneScore: 1000,
-  revertPlayerScoreOnSameScore: false,
-};
-
-interface FarkleState {
-  players: StoredPlayer[];
-  game: Game | null;
-  settings: FarkleSettings;
-  turnHistory: TurnResult[];
-  updateSettings: (settings: FarkleSettings) => void;
-  startNewGame: (game: Omit<Game, 'currenPlayerIdTurn'>) => void;
-  resetGame: () => void;
-  addPointsToPlayer: (score: number) => void;
-  undoLastAction: () => void;
-  clearPreviewScore: () => void;
-  farkle: (t: TFunction) => void;
-  sixDiceFarkle: () => void;
-  bank: (t: TFunction) => void;
-  nextPlayer: () => void;
-  removeStoredPlayer: (playerName: string) => void;
-  finishGame: (winners: string[]) => void;
-  history: Game[];
-  finishedGames: FinishedGame[];
-}
-
-const getHistory = (history: FarkleState['history'] | null): Game[] => (Array.isArray(history) ? history : []);
-
-const getFinishedGames = (finishedGames: FarkleState['finishedGames'] | null): FinishedGame[] =>
-  Array.isArray(finishedGames) ? finishedGames : [];
-
-const getNextPlayerId = (game: Game): string | null => {
-  if (game.players.length === 0) {
-    return game.currenPlayerIdTurn;
-  }
-
-  const currentPlayerIndex = game.players.findIndex((player) => player.id === game.currenPlayerIdTurn);
-  const nextPlayerIndex = (currentPlayerIndex + 1) % game.players.length;
-
-  return game.players[nextPlayerIndex].id;
-};
-
-const advanceTurn = (game: Game): Pick<Game, 'currenPlayerIdTurn' | 'isFinished'> => {
-  const nextPlayerId = getNextPlayerId(game);
-  const isFinished = Boolean(game.finalRoundStartedByPlayerId && nextPlayerId === game.finalRoundStartedByPlayerId);
-
-  return {
-    currenPlayerIdTurn: isFinished ? null : nextPlayerId,
-    isFinished,
-  };
-};
-
-const hasReachedWinningScore = (game: Game, score: number): boolean =>
-  game.exactScoreRequired ? score === game.scoreToReach : score >= game.scoreToReach;
+import i18n from '../i18n/config';
 
 export const useFarkleStore = create<FarkleState>()(
   devtools(
@@ -172,7 +115,7 @@ export const useFarkleStore = create<FarkleState>()(
               turnHistory: state.turnHistory.slice(0, -1),
             };
           }),
-        farkle: (t) =>
+        farkle: () =>
           set((state) => {
             if (!state.game || state.game.isFinished || !state.game.currenPlayerIdTurn) {
               return state;
@@ -187,8 +130,8 @@ export const useFarkleStore = create<FarkleState>()(
 
             if (isThirdConsecutive) {
               notifications.show({
-                title: t('game.settings.threeConsecutiveFarkle.title'),
-                message: t('game.settings.threeConsecutiveFarkle.alertMessage', { points: scorePenalty }),
+                title: i18n.t('settings:settings.threeConsecutiveFarkle.title'),
+                message: i18n.t('settings:settings.threeConsecutiveFarkle.alertMessage', { points: scorePenalty }),
                 autoClose: 6000,
                 position: 'top-center',
                 color: 'orange',
@@ -267,7 +210,7 @@ export const useFarkleStore = create<FarkleState>()(
               },
             };
           }),
-        bank: (t) =>
+        bank: () =>
           set((state) => {
             if (!state.game || state.game.isFinished || !state.game.currenPlayerIdTurn) {
               return state;
@@ -286,8 +229,8 @@ export const useFarkleStore = create<FarkleState>()(
 
             if (isMinimumFirstScoreEnabled && isFirstScore && currentPlayer.previewScore < minimumFirstScoreValue) {
               notifications.show({
-                title: t('bank.error.title'),
-                message: t('bank.error.message', { minimum: minimumFirstScoreValue }),
+                title: i18n.t('game:bank.error.title'),
+                message: i18n.t('game:bank.error.message', { minimum: minimumFirstScoreValue }),
                 position: 'top-center',
                 color: 'red',
                 autoClose: false,
@@ -317,8 +260,8 @@ export const useFarkleStore = create<FarkleState>()(
                 }
                 if (player.score === currentPlayerNewScore) {
                   notifications.show({
-                    title: t('game.settings.revertPlayerScoreOnSameScore.title'),
-                    message: t('game.settings.revertPlayerScoreOnSameScore.alertMesage'),
+                    title: i18n.t('settings:settings.revertPlayerScoreOnSameScore.title'),
+                    message: i18n.t('settings:settings.revertPlayerScoreOnSameScore.alertMesage'),
                     position: 'top-center',
                     color: 'orange',
                     autoClose: 6000,
@@ -343,10 +286,11 @@ export const useFarkleStore = create<FarkleState>()(
               : state.game;
             if (startsFinalRound) {
               notifications.show({
-                title: t('game.lastRound.title'),
-                message: t('game.lastRound.message'),
+                title: i18n.t('game:lastRound.title'),
+                message: i18n.t('game:lastRound.message'),
                 position: 'top-center',
                 color: 'orange',
+                autoClose: false,
               });
             }
 

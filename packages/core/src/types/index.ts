@@ -61,3 +61,24 @@ export type FarkleSettings = {
 };
 
 export type TripleOneScore = (typeof TRIPLE_ONE_SCORE_OPTIONS)[number];
+
+export interface FarkleState {
+  players: StoredPlayer[];
+  game: Game | null;
+  settings: FarkleSettings;
+  turnHistory: TurnResult[];
+  updateSettings: (settings: FarkleSettings) => void;
+  startNewGame: (game: Omit<Game, 'currenPlayerIdTurn'>) => void;
+  resetGame: () => void;
+  addPointsToPlayer: (score: number) => void;
+  undoLastAction: () => void;
+  clearPreviewScore: () => void;
+  farkle: () => void;
+  sixDiceFarkle: () => void;
+  bank: () => void;
+  nextPlayer: () => void;
+  removeStoredPlayer: (playerName: string) => void;
+  finishGame: (winners: string[]) => void;
+  history: Game[];
+  finishedGames: FinishedGame[];
+}

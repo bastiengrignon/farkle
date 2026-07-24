@@ -7,7 +7,7 @@ import { Flex, Group, Paper, Progress, RollingNumber, ScrollArea, Text } from '@
 
 import type { Game, GamePlayer, TurnResult } from '@farkle/core';
 
-import { usePlayersScoreHooks } from './PlayersScore.hooks.ts';
+import { usePlayersScoreHooks } from './PlayersScore.hooks';
 import classes from './PlayersScore.module.css';
 
 interface PlayersScoreProps {

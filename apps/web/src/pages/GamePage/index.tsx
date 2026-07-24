@@ -24,7 +24,7 @@ import Keyboard from '@components/Keyboard';
 import ModalTurnHistory from '@components/ModalTurnHistory';
 import PlayersScore from '@components/PlayersScore';
 
-import { useGamePageHooks } from './GamePage.hooks.ts';
+import { useGamePageHooks } from './GamePage.hooks';
 import classes from './GamePage.module.css';
 
 const GamePage: FC = () => {
@@ -61,7 +61,7 @@ const GamePage: FC = () => {
       <Center p="md" mih="calc(100dvh - var(--app-shell-header-offset, 0rem))">
         <Stack w="100%" maw={500}>
           <Title order={2} ta="center">
-            {t(winners.length === 1 ? 'game.finished.winner' : 'game.finished.winners')}
+            {t('finished.winner', { count: winners.length })}
           </Title>
           {winners.map((winner) => (
             <Paper key={winner.id} withBorder p="md">
@@ -72,7 +72,7 @@ const GamePage: FC = () => {
             </Paper>
           ))}
           <Button fullWidth mt="md" onClick={handleLeaveGame}>
-            {t('game.finished.newGame')}
+            {t('newGame.title')}
           </Button>
         </Stack>
       </Center>

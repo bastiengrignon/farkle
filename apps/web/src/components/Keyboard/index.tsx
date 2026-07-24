@@ -9,7 +9,7 @@ import KeyboardSecondRow from '@components/Keyboard/KeyboardSecondRow';
 import KeyboardThirdRow from '@components/Keyboard/KeyboardThirdRow';
 import ScorePreview from '@components/ScorePreview';
 
-import { useKeyboardHooks } from './Keyboard.hooks.ts';
+import { useKeyboardHooks } from './Keyboard.hooks';
 
 const Keyboard: FC = () => {
   const { t } = useTranslation('game');
@@ -30,10 +30,10 @@ const Keyboard: FC = () => {
             <TbNumber6 size={48} />
           </Button>
         )}
-        <Button fullWidth color="red" onClick={() => farkle(t)}>
+        <Button fullWidth color="red" onClick={farkle}>
           {t('keyboard.farkle')}
         </Button>
-        <Button fullWidth color="green" onClick={() => bank(t)} disabled={!canCurrentPlayerScore}>
+        <Button fullWidth color="green" onClick={bank} disabled={!canCurrentPlayerScore}>
           {t('keyboard.bank')}
         </Button>
       </Flex>

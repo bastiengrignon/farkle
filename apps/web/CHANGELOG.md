@@ -1,5 +1,16 @@
 # web
 
+## 1.1.0
+
+### Minor Changes
+
+- Move score logic inside core package
+
+### Patch Changes
+
+- Updated dependencies
+  - @farkle/core@1.1.0
+
 ## 1.0.4
 
 ### Patch Changes

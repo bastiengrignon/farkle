@@ -6,7 +6,7 @@ import { ActionIcon, Center, Flex, Grid, Modal, Text, Title, UnstyledButton } fr
 
 import { FARKLE_SCORES } from '@farkle/core';
 
-import { useKeyboardFirstRowHooks } from './KeyboardFirstRow.hooks.ts';
+import { useKeyboardFirstRowHooks } from './KeyboardFirstRow.hooks';
 import classes from './KeyboardFirstRow.module.css';
 
 const KeyboardFirstRow: FC = () => {

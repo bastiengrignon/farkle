@@ -6,7 +6,7 @@ import clsx from 'clsx';
 
 import { ActionIcon, Center, Flex, Group, NumberFormatter, Paper, Stack, Text, Tooltip } from '@mantine/core';
 
-import { useScorePreviewHooks } from './ScorePreview.hooks.ts';
+import { useScorePreviewHooks } from './ScorePreview.hooks';
 import classes from './ScorePreview.module.css';
 
 const displayPreviewScoreIfAboveLimit = (previewScore: number, scoreToReach: number) =>
