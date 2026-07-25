@@ -21,7 +21,7 @@ export const useModalNewGameHooks = ({ t }: ModalFarkleNewGameHooksProps) => {
   const navigate = useNavigate();
   const commonPlayers = useFarkleStore((state) => state.players);
   const startNewGame = useFarkleStore((state) => state.startNewGame);
-  const newGameForm = useForm<Omit<Game, 'currenPlayerIdTurn'>>({
+  const newGameForm = useForm<Omit<Game, 'currentPlayerIdTurn'>>({
     initialValues: {
       id: uuidv4(),
       players: commonPlayers.map(({ name }) => ({
@@ -58,7 +58,7 @@ export const useModalNewGameHooks = ({ t }: ModalFarkleNewGameHooksProps) => {
   }, []);
 
   const handleSubmitNewGame = useCallback(
-    (game: Omit<Game, 'currenPlayerIdTurn'>) => {
+    (game: Omit<Game, 'currentPlayerIdTurn'>) => {
       startNewGame(game);
       navigate(replaceRouteParams(routes.game, { gameId: game.id }));
     },

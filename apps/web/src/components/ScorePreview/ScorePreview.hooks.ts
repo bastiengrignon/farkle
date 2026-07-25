@@ -8,8 +8,8 @@ export const useScorePreviewHooks = () => {
   const clearPreviewScore = useFarkleStore((state) => state.clearPreviewScore);
 
   const currentPlayer = useMemo(
-    () => [...(game?.players || [])].find((player) => player.id === game?.currenPlayerIdTurn),
-    [game?.currenPlayerIdTurn, game?.players]
+    () => [...(game?.players || [])].find((player) => player.id === game?.currentPlayerIdTurn),
+    [game?.currentPlayerIdTurn, game?.players]
   );
 
   const previewScore = useMemo(

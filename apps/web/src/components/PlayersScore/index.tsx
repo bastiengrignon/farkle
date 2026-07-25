@@ -42,11 +42,11 @@ const PlayersScore: FC<PlayersScoreProps> = ({ game, turnHistory, onPlayerClick 
             withBorder
             p="md"
             mb="md"
-            shadow={game.currenPlayerIdTurn === player.id ? 'lg' : 'none'}
+            shadow={game.currentPlayerIdTurn === player.id ? 'lg' : 'none'}
             pos="relative"
             className={clsx(classes.playerScoreContainer, {
               [classes.playerScoreContainerHasHistory]: hasHistory,
-              [classes.playerScoreContainerCurrentPlayer]: game.currenPlayerIdTurn === player.id,
+              [classes.playerScoreContainerCurrentPlayer]: game.currentPlayerIdTurn === player.id,
             })}
             onClick={player.hasScored ? () => onPlayerClick?.(player.id) : undefined}
           >
@@ -61,8 +61,8 @@ const PlayersScore: FC<PlayersScoreProps> = ({ game, turnHistory, onPlayerClick 
             />
             <Flex justify="space-between" align="center" className={classes.playerScore}>
               <Group align="center" gap="xs">
-                <Text fw={game.currenPlayerIdTurn === player.id ? 'bold' : 'normal'}>{player.name}</Text>
-                {game.currenPlayerIdTurn === player.id && <TbDice6Filled className={classes.currentPlayerTurnDice} />}
+                <Text fw={game.currentPlayerIdTurn === player.id ? 'bold' : 'normal'}>{player.name}</Text>
+                {game.currentPlayerIdTurn === player.id && <TbDice6Filled className={classes.currentPlayerTurnDice} />}
               </Group>
               <Group align="center" gap="xs">
                 {getTopScorePlayers(game.players).includes(player.id) && (

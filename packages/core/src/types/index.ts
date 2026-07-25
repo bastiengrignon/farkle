@@ -28,7 +28,7 @@ export type Game = {
   players: GamePlayer[];
   scoreToReach: number;
   exactScoreRequired: boolean;
-  currenPlayerIdTurn: string | null;
+  currentPlayerIdTurn: string | null;
   finalRoundStartedByPlayerId?: string | null;
   isFinished?: boolean;
 };
@@ -68,7 +68,7 @@ export interface FarkleState {
   settings: FarkleSettings;
   turnHistory: TurnResult[];
   updateSettings: (settings: FarkleSettings) => void;
-  startNewGame: (game: Omit<Game, 'currenPlayerIdTurn'>) => void;
+  startNewGame: (game: Omit<Game, 'currentPlayerIdTurn'>) => void;
   resetGame: () => void;
   addPointsToPlayer: (score: number) => void;
   undoLastAction: () => void;

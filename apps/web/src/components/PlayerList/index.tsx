@@ -14,7 +14,7 @@ import classes from './PlayerList.module.css';
 interface PlayerListProps {
   player: GamePlayer;
   index: number;
-  form: UseFormReturnType<Omit<Game, 'currenPlayerIdTurn'>>;
+  form: UseFormReturnType<Omit<Game, 'currentPlayerIdTurn'>>;
 }
 
 const PlayerList: FC<PlayerListProps> = ({ player, index, form }) => {

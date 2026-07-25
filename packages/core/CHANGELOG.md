@@ -1,5 +1,11 @@
 # @farkle/core
 
+## 1.2.2
+
+### Patch Changes
+
+- Rename type in Game key
+
 ## 1.2.1
 
 ### Patch Changes

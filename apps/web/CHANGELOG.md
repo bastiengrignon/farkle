@@ -1,5 +1,13 @@
 # web
 
+## 1.3.4
+
+### Patch Changes
+
+- Rename type in Game key
+- Updated dependencies
+  - @farkle/core@1.2.2
+
 ## 1.3.3
 
 ### Patch Changes

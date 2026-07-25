@@ -13,7 +13,8 @@
       "!**/node_modules",
       "!**/prisma",
       "!**/.turbo",
-      "!**/*.d.ts"
+      "!**/*.d.ts",
+      "!**/meta.json"
     ],
     "ignoreUnknown": false
   },

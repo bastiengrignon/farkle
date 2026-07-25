@@ -1,6 +1,6 @@
 {
   "name": "@farkle/core",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "private": true,
   "description": "Core package with types and common utilities",
   "license": "MIT",

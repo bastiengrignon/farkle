@@ -32,7 +32,7 @@ export const useFarkleStore = create<FarkleState>()(
             ),
             game: {
               ...game,
-              currenPlayerIdTurn: game.players.at(0)?.id ?? null,
+              currentPlayerIdTurn: game.players.at(0)?.id ?? null,
               finalRoundStartedByPlayerId: null,
               isFinished: false,
             },
@@ -63,7 +63,7 @@ export const useFarkleStore = create<FarkleState>()(
           }),
         addPointsToPlayer: (score: number) =>
           set((state) => {
-            if (!state.game || state.game.isFinished || !state.game.currenPlayerIdTurn) {
+            if (!state.game || state.game.isFinished || !state.game.currentPlayerIdTurn) {
               return state;
             }
             return {
@@ -71,7 +71,7 @@ export const useFarkleStore = create<FarkleState>()(
               game: {
                 ...state.game,
                 players: [...state.game.players].map((player) =>
-                  player.id === state.game?.currenPlayerIdTurn
+                  player.id === state.game?.currentPlayerIdTurn
                     ? {
                         ...player,
                         previewScore: player.previewScore + score,
@@ -86,7 +86,7 @@ export const useFarkleStore = create<FarkleState>()(
             if (
               !state.game ||
               state.game.isFinished ||
-              !state.game.currenPlayerIdTurn ||
+              !state.game.currentPlayerIdTurn ||
               state.game.players.length === 0
             ) {
               return state;
@@ -117,10 +117,10 @@ export const useFarkleStore = create<FarkleState>()(
           }),
         farkle: () =>
           set((state) => {
-            if (!state.game || state.game.isFinished || !state.game.currenPlayerIdTurn) {
+            if (!state.game || state.game.isFinished || !state.game.currentPlayerIdTurn) {
               return state;
             }
-            const currentPlayerId = state.game.currenPlayerIdTurn;
+            const currentPlayerId = state.game.currentPlayerIdTurn;
             const currentPlayer = state.game.players.find((player) => player.id === currentPlayerId);
 
             const consecutiveFarkleEnabled = state.settings.consecutiveFarkle.enabled;
@@ -172,12 +172,12 @@ export const useFarkleStore = create<FarkleState>()(
             if (
               !state.game ||
               state.game.isFinished ||
-              !state.game.currenPlayerIdTurn ||
+              !state.game.currentPlayerIdTurn ||
               !state.settings.sixDiceFarkle.enabled
             ) {
               return state;
             }
-            const currentPlayerId = state.game.currenPlayerIdTurn;
+            const currentPlayerId = state.game.currentPlayerIdTurn;
             const currentPlayer = state.game.players.find((player) => player.id === currentPlayerId);
 
             const newTurnResult: TurnResult = {
@@ -212,11 +212,11 @@ export const useFarkleStore = create<FarkleState>()(
           }),
         bank: () =>
           set((state) => {
-            if (!state.game || state.game.isFinished || !state.game.currenPlayerIdTurn) {
+            if (!state.game || state.game.isFinished || !state.game.currentPlayerIdTurn) {
               return state;
             }
 
-            const currentPlayerId = state.game.currenPlayerIdTurn;
+            const currentPlayerId = state.game.currentPlayerIdTurn;
             const currentPlayer = state.game.players.find((player) => player.id === currentPlayerId);
 
             if (!currentPlayer) {
@@ -318,7 +318,7 @@ export const useFarkleStore = create<FarkleState>()(
           })),
         clearPreviewScore: () =>
           set((state) => {
-            if (!state.game?.currenPlayerIdTurn) {
+            if (!state.game?.currentPlayerIdTurn) {
               return state;
             }
             return {
@@ -326,7 +326,7 @@ export const useFarkleStore = create<FarkleState>()(
               game: {
                 ...state.game,
                 players: [...state.game.players].map((player) =>
-                  player.id === state.game?.currenPlayerIdTurn
+                  player.id === state.game?.currentPlayerIdTurn
                     ? {
                         ...player,
                         previewScore: 0,

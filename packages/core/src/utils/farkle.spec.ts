@@ -26,7 +26,7 @@ const STUB_GAME: Game = {
   players: STUB_PLAYERS,
   scoreToReach: 10_000,
   exactScoreRequired: true,
-  currenPlayerIdTurn: '2c2505df-9f1d-4d81-bf90-c03bbc8c6dd9',
+  currentPlayerIdTurn: '2c2505df-9f1d-4d81-bf90-c03bbc8c6dd9',
 };
 
 const STUB_GAME_LAST_ROUND: Game = {
@@ -34,7 +34,7 @@ const STUB_GAME_LAST_ROUND: Game = {
   players: STUB_PLAYERS,
   scoreToReach: 10_000,
   exactScoreRequired: true,
-  currenPlayerIdTurn: '2c2505df-9f1d-4d81-bf90-c03bbc8c6dd9',
+  currentPlayerIdTurn: '2c2505df-9f1d-4d81-bf90-c03bbc8c6dd9',
   finalRoundStartedByPlayerId: '2c2505df-9f1d-4d81-bf90-c03bbc8c6dd9',
 };
 
@@ -43,7 +43,7 @@ const STUB_GAME_LAST_ROUND_FINISHED: Game = {
   players: STUB_PLAYERS,
   scoreToReach: 10_000,
   exactScoreRequired: true,
-  currenPlayerIdTurn: '5a437a78-b668-442d-a693-7ad70687bb1f',
+  currentPlayerIdTurn: '5a437a78-b668-442d-a693-7ad70687bb1f',
   finalRoundStartedByPlayerId: '2c2505df-9f1d-4d81-bf90-c03bbc8c6dd9',
 };
 
@@ -52,7 +52,7 @@ const STUB_GAME_NO_PLAYERS: Game = {
   players: [],
   scoreToReach: 10_000,
   exactScoreRequired: true,
-  currenPlayerIdTurn: '2c2505df-9f1d-4d81-bf90-c03bbc8c6dd9',
+  currentPlayerIdTurn: '2c2505df-9f1d-4d81-bf90-c03bbc8c6dd9',
 };
 
 describe('farkle tests', () => {
@@ -90,7 +90,7 @@ describe('farkle tests', () => {
     });
 
     it('should return the first playerId when last player of the array', () => {
-      const nextPlayer = getNextPlayerId({ ...STUB_GAME, currenPlayerIdTurn: '5a437a78-b668-442d-a693-7ad70687bb1f' });
+      const nextPlayer = getNextPlayerId({ ...STUB_GAME, currentPlayerIdTurn: '5a437a78-b668-442d-a693-7ad70687bb1f' });
       expect(nextPlayer).toBe('2c2505df-9f1d-4d81-bf90-c03bbc8c6dd9');
     });
   });
@@ -99,7 +99,7 @@ describe('farkle tests', () => {
     it('should move to next player, game is not finished', () => {
       const newGameState = advanceTurn(STUB_GAME);
       expect(newGameState).toStrictEqual({
-        currenPlayerIdTurn: '5a437a78-b668-442d-a693-7ad70687bb1f',
+        currentPlayerIdTurn: '5a437a78-b668-442d-a693-7ad70687bb1f',
         isFinished: false,
       });
     });
@@ -107,7 +107,7 @@ describe('farkle tests', () => {
     it('should move to next player, game is not finished but last round', () => {
       const newGameState = advanceTurn(STUB_GAME_LAST_ROUND);
       expect(newGameState).toStrictEqual({
-        currenPlayerIdTurn: '5a437a78-b668-442d-a693-7ad70687bb1f',
+        currentPlayerIdTurn: '5a437a78-b668-442d-a693-7ad70687bb1f',
         isFinished: false,
       });
     });
@@ -115,7 +115,7 @@ describe('farkle tests', () => {
     it('should set currentPlayer to null, game is finished', () => {
       const newGameState = advanceTurn(STUB_GAME_LAST_ROUND_FINISHED);
       expect(newGameState).toStrictEqual({
-        currenPlayerIdTurn: null,
+        currentPlayerIdTurn: null,
         isFinished: true,
       });
     });

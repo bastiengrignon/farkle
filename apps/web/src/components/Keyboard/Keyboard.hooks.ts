@@ -10,7 +10,7 @@ export const useKeyboardHooks = () => {
   const bank = useFarkleStore((state) => state.bank);
 
   const canCurrentPlayerScore = useMemo(() => {
-    const currentPlayer = game?.players.find((player) => player.id === game?.currenPlayerIdTurn);
+    const currentPlayer = game?.players.find((player) => player.id === game?.currentPlayerIdTurn);
     return Boolean(
       currentPlayer &&
         game &&

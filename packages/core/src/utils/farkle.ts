@@ -36,21 +36,21 @@ export const getOrCreateArray = <T>(array: T | null) => (Array.isArray(array) ? 
 
 export const getNextPlayerId = (game: Game): string | null => {
   if (game.players.length === 0) {
-    return game.currenPlayerIdTurn;
+    return game.currentPlayerIdTurn;
   }
 
-  const currentPlayerIndex = game.players.findIndex((player) => player.id === game.currenPlayerIdTurn);
+  const currentPlayerIndex = game.players.findIndex((player) => player.id === game.currentPlayerIdTurn);
   const nextPlayerIndex = (currentPlayerIndex + 1) % game.players.length;
 
   return game.players[nextPlayerIndex].id;
 };
 
-export const advanceTurn = (game: Game): Pick<Game, 'currenPlayerIdTurn' | 'isFinished'> => {
+export const advanceTurn = (game: Game): Pick<Game, 'currentPlayerIdTurn' | 'isFinished'> => {
   const nextPlayerId = getNextPlayerId(game);
   const isFinished = Boolean(game.finalRoundStartedByPlayerId && nextPlayerId === game.finalRoundStartedByPlayerId);
 
   return {
-    currenPlayerIdTurn: isFinished ? null : nextPlayerId,
+    currentPlayerIdTurn: isFinished ? null : nextPlayerId,
     isFinished,
   };
 };
