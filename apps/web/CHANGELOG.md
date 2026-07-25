@@ -1,5 +1,11 @@
 # web
 
+## 1.3.0
+
+### Minor Changes
+
+- Add umami analytics script
+
 ## 1.2.1
 
 ### Patch Changes
