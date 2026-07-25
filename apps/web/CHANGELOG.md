@@ -1,5 +1,11 @@
 # web
 
+## 1.1.4
+
+### Patch Changes
+
+- Upgrade farkle rules with components
+
 ## 1.1.3
 
 ### Patch Changes

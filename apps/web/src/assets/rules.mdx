@@ -1,5 +1,7 @@
-# 🎲 Règles du Farkle (10 000)
+import { Box, Table, Text } from "@mantine/core";
+import { DataTable } from "mantine-datatable";
 
+# 🎲 Règles du Farkle (10 000)
 Le **Farkle**, aussi appelé **10 000**, est un jeu de dés où les joueurs tentent d'atteindre un score cible en accumulant des combinaisons de dés.
 
 Le principe est simple :
@@ -13,33 +15,35 @@ Le principe est simple :
 
 # Décompte des points
 
-| Combinaison   |   Score |
-|---------------|--------:|
-| 1             |     100 |
-| 5             |      50 |
-| ------------- | ------- |
-| 111           |    1000 |
-| 222           |     200 |
-| 333           |     300 |
-| 444           |     400 |
-| 555           |     500 |
-| 666           |     600 |
-| x4            |    1000 |
-| x5            |    1500 |
-| x6            |    2000 |
-| Suite         |    1500 |
-| Trois paires  |    1500 |
-| x4 + paire    |    1500 |
-| Deux brelans  |    2500 |
-
-1 ou 5 : Les autres dés seuls ne rapportent aucun point.
-Lorsqu'une combinaison comporte plus de trois dés identiques, le score est doublé pour chaque dé supplémentaire.
-Obtenir une suite complète avec les six dés rapporte : **1500 points**
-Trois paires différentes : **1500 points**
+<Box w={{ base: '100%', md: '50%' }}>
+  <DataTable
+    withTableBorder
+    withColumnBorders
+    borderRadius="sm"
+    striped
+    highlightOnHover
+    columns={[
+      { accessor: 'combination', title: 'Combinaison' },
+      { accessor: 'score', title: 'Score' },
+    ]}
+    records={[
+      { combination: '1', score: '100' },
+      { combination: '5', score: '50' },
+      { combination: 'x3', score: 'chiffre * 100 (sauf 1, ex: 444 -> 400, 666 -> 600, 111 -> 1000)' },
+      { combination: 'x4', score: '1000' },
+      { combination: 'x5', score: '1500' },
+      { combination: 'x6', score: '2000' },
+      { combination: 'Suite', score: '1500' },
+      { combination: '3 paires', score: '1500' },
+      { combination: 'x4 + paire', score: '1500' },
+      { combination: '2 brelans', score: '2000' },
+    ]}
+  />
+</Box>
 
 # Fin de partie
 
-La partie se termine lorsqu'un joueur atteint ou dépasse le score cible (généralement **10 000 points**).
+La partie se termine lorsqu'un joueur atteint ou dépasse le score cible (généralement **10 000 points**).<br/>
 Les autres joueurs bénéficient d'un dernier tour.
 
 # Options disponibles
@@ -47,13 +51,13 @@ Les autres joueurs bénéficient d'un dernier tour.
 ## 🎲 6 dés Farkle
 
 Lorsqu'un joueur obtient un Farkle alors qu'il lançait les **6 dés**, un bonus prédéfini est appliquée.<br/>
-Cette règle est **désactivée** par défaut.
+Cette règle est <Text component="span" c="orange" fw="bold">désactivée</Text> par défaut.
 
 
 ## 💀 3 Farkles consécutifs
 
 Si un joueur réalise **3 Farkles consécutifs**, une pénalité prédéfinie est appliquée.<br/>
-Cette règle est **désactivée** par défaut.
+Cette règle est <Text component="span" c="orange" fw="bold">désactivée</Text> par défaut.
 
 
 ## 🔄 Score identique à un autre joueur
@@ -65,22 +69,48 @@ Lorsqu'un joueur banquera exactement le même score qu'un autre joueur :
 
 Exemple :
 
-| Joueur | Score avant |
-|--------|------------:|
-| Alice  |        4200 |
-| Bob    |        3800 |
+<Box w={{ base: '100%', md: '50%' }}>
+  <DataTable
+    withTableBorder
+    withColumnBorders
+    borderRadius="sm"
+    striped
+    highlightOnHover
+    columns={[
+      { accessor: 'player', title: 'Joueur' },
+      { accessor: 'score', title: 'Score' },
+    ]}
+    records={[
+      { player: 'Alice', score: 4200 },
+      { player: 'Bob', score: 3800 },
+    ]}
+  />
+</Box>
 
 Alice avait **3500** points, elle fait **700** points et banque.<br/>
 Bob fait **400** points et banque.
 
 Résultat :
 
-| Joueur | Score |
-|--------|------:|
-| Alice  |  3500 |
-| Bob    |  4200 |
+<Box w={{ base: '100%', md: '50%' }}>
+  <DataTable
+    withTableBorder
+    withColumnBorders
+    borderRadius="sm"
+    striped
+    highlightOnHover
+    columns={[
+      { accessor: 'player', title: 'Joueur' },
+      { accessor: 'score', title: 'Score' },
+    ]}
+    records={[
+      { player: 'Alice', score: 3500 },
+      { player: 'Bob', score: 4200 },
+    ]}
+  />
+</Box>
 
-Cette règle est **désactivée** par défaut.
+Cette règle est <Text component="span" c="orange" fw="bold">désactivée</Text> par défaut.
 
 
 ## 🚀 Score minimum pour commencer
@@ -94,8 +124,7 @@ Exemple avec une valeur de **500** :
 - Tour à 700 → le joueur entre dans la partie avec 700 points.
 
 Une fois ce seuil atteint, les tours suivants peuvent être banqués normalement.<br/>
-Cette règle est **activée** par défaut à 500 points.
-
+Cette règle est <Text component="span" c="orange" fw="bold">activée</Text> par défaut.
 
 
 Chaque variante peut être activée indépendamment afin de reproduire les nombreuses versions du Farkle.
