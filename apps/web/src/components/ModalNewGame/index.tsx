@@ -1,10 +1,13 @@
 import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TbChevronDown, TbChevronUp, TbDice1, TbX } from 'react-icons/tb';
+import { TbDice1 } from 'react-icons/tb';
 
+import { DragDropProvider } from '@dnd-kit/react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { ActionIcon, Button, Flex, Group, Modal, NumberInput, Stack, Switch, Text, TextInput } from '@mantine/core';
+import { Button, Flex, Modal, NumberInput, Stack, Switch, Text } from '@mantine/core';
+
+import PlayerList from '@components/PlayerList';
 
 import { useModalNewGameHooks } from './ModalNewGame.hooks';
 
@@ -15,7 +18,7 @@ interface ModalNewGameProps {
 
 const ModalNewGame: FC<ModalNewGameProps> = ({ opened, close }) => {
   const { t } = useTranslation('game');
-  const { newGameForm, resetFormOnClose, handleSubmitNewGame } = useModalNewGameHooks({ t });
+  const { newGameForm, resetFormOnClose, handleSubmitNewGame, handleReorderPlayers } = useModalNewGameHooks({ t });
 
   return (
     <Modal opened={opened} onClose={close} onExitTransitionEnd={resetFormOnClose} title={t('newGame.title')} size="sm">
@@ -42,31 +45,13 @@ const ModalNewGame: FC<ModalNewGameProps> = ({ opened, close }) => {
               </Text>
             )}
           </div>
-          <Stack gap="xs" mt="xs">
-            {newGameForm.values.players.map((player, index) => (
-              <Group gap="xs" key={player.id}>
-                <TextInput
-                  placeholder={`Player ${index + 1}`}
-                  {...newGameForm.getInputProps(`players.${index}.name`)}
-                />
-                <ActionIcon
-                  disabled={index === 0}
-                  onClick={() => newGameForm.reorderListItem('players', { from: index, to: index - 1 })}
-                >
-                  <TbChevronUp />
-                </ActionIcon>
-                <ActionIcon
-                  disabled={index === newGameForm.values.players.length - 1}
-                  onClick={() => newGameForm.reorderListItem('players', { from: index, to: index + 1 })}
-                >
-                  <TbChevronDown />
-                </ActionIcon>
-                <ActionIcon color="red" onClick={() => newGameForm.removeListItem('players', index)}>
-                  <TbX />
-                </ActionIcon>
-              </Group>
-            ))}
-          </Stack>
+          <DragDropProvider onDragEnd={handleReorderPlayers}>
+            <Stack gap="xs" mt="xs">
+              {newGameForm.values.players.map((player, index) => (
+                <PlayerList key={player.id} player={player} index={index} form={newGameForm} />
+              ))}
+            </Stack>
+          </DragDropProvider>
           <NumberInput thousandSeparator=" " step={50} {...newGameForm.getInputProps('scoreToReach')} />
           <Switch
             {...newGameForm.getInputProps('exactScoreRequired', { type: 'checkbox' })}

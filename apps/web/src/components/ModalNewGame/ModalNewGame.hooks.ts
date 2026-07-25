@@ -1,6 +1,8 @@
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 
+import type { DragEndEvent } from '@dnd-kit/react';
+import { isSortable } from '@dnd-kit/react/sortable';
 import type { TFunction } from 'i18next';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -42,6 +44,19 @@ export const useModalNewGameHooks = ({ t }: ModalFarkleNewGameHooksProps) => {
     },
   });
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: no Mantine form in dependency
+  const handleReorderPlayers = useCallback((event: DragEndEvent) => {
+    if (event.canceled) return;
+    const { source } = event.operation;
+
+    if (isSortable(source)) {
+      const { initialIndex, index } = source;
+      if (initialIndex !== index) {
+        newGameForm.reorderListItem('players', { from: initialIndex, to: index });
+      }
+    }
+  }, []);
+
   const handleSubmitNewGame = useCallback(
     (game: Omit<Game, 'currenPlayerIdTurn'>) => {
       startNewGame(game);
@@ -54,5 +69,6 @@ export const useModalNewGameHooks = ({ t }: ModalFarkleNewGameHooksProps) => {
     newGameForm,
     resetFormOnClose: newGameForm.reset,
     handleSubmitNewGame,
+    handleReorderPlayers,
   };
 };
