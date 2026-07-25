@@ -43,15 +43,17 @@ const PlayersScore: FC<PlayersScoreProps> = ({ game, turnHistory, onPlayerClick 
             p="md"
             mb="md"
             shadow={game.currenPlayerIdTurn === player.id ? 'lg' : 'none'}
-            bd={game.currenPlayerIdTurn === player.id ? '1px solid green' : '1px solid gray'}
             pos="relative"
-            className={clsx(classes.playerScoreContainer, { [classes.playerScoreContainerHasHistory]: hasHistory })}
-            onClick={() => onPlayerClick?.(player.id)}
+            className={clsx(classes.playerScoreContainer, {
+              [classes.playerScoreContainerHasHistory]: hasHistory,
+              [classes.playerScoreContainerCurrentPlayer]: game.currenPlayerIdTurn === player.id,
+            })}
+            onClick={player.hasScored ? () => onPlayerClick?.(player.id) : undefined}
           >
             <Progress
               value={progress}
               color={playerColors[index]}
-              radius="md"
+              radius="sm"
               size="xs"
               classNames={{
                 root: classes.playerScoreProgressContainer,

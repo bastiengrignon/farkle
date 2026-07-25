@@ -1,5 +1,11 @@
 # web
 
+## 1.1.7
+
+### Patch Changes
+
+- Fix player score card
+
 ## 1.1.6
 
 ### Patch Changes
