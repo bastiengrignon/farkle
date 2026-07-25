@@ -1,5 +1,11 @@
 # web
 
+## 1.1.6
+
+### Patch Changes
+
+- Implement drag and drop for initial players ordering
+
 ## 1.1.5
 
 ### Patch Changes
