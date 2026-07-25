@@ -1,5 +1,11 @@
 # web
 
+## 1.1.8
+
+### Patch Changes
+
+- Fix revert player score on last round
+
 ## 1.1.7
 
 ### Patch Changes

@@ -252,7 +252,24 @@ export const useFarkleStore = create<FarkleState>()(
                 : player
             );
 
-            if (state.settings.revertPlayerScoreOnSameScore) {
+            const updatedPlayer = players.find((player) => player.id === currentPlayerId);
+            const startsFinalRound =
+              !state.game.finalRoundStartedByPlayerId &&
+              Boolean(updatedPlayer && hasReachedWinningScore(state.game, updatedPlayer.score));
+            const gameWithFinalRound = startsFinalRound
+              ? { ...state.game, finalRoundStartedByPlayerId: currentPlayerId }
+              : state.game;
+            if (startsFinalRound) {
+              notifications.show({
+                title: i18n.t('game:lastRound.title'),
+                message: i18n.t('game:lastRound.message'),
+                position: 'top-center',
+                color: 'orange',
+                autoClose: false,
+              });
+            }
+
+            if (state.settings.revertPlayerScoreOnSameScore && !state.game.finalRoundStartedByPlayerId) {
               const history = getHistory(state.history);
               players = players.map((player) => {
                 if (player.id === currentPlayerId) {
@@ -274,23 +291,6 @@ export const useFarkleStore = create<FarkleState>()(
                   return previousPlayer ? { ...player, score: previousPlayer.score } : player;
                 }
                 return player;
-              });
-            }
-
-            const updatedPlayer = players.find((player) => player.id === currentPlayerId);
-            const startsFinalRound =
-              !state.game.finalRoundStartedByPlayerId &&
-              Boolean(updatedPlayer && hasReachedWinningScore(state.game, updatedPlayer.score));
-            const gameWithFinalRound = startsFinalRound
-              ? { ...state.game, finalRoundStartedByPlayerId: currentPlayerId }
-              : state.game;
-            if (startsFinalRound) {
-              notifications.show({
-                title: i18n.t('game:lastRound.title'),
-                message: i18n.t('game:lastRound.message'),
-                position: 'top-center',
-                color: 'orange',
-                autoClose: false,
               });
             }
 
