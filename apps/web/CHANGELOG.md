@@ -1,5 +1,11 @@
 # web
 
+## 1.3.2
+
+### Patch Changes
+
+- Add some umami events
+
 ## 1.3.1
 
 ### Patch Changes

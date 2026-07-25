@@ -23,6 +23,7 @@ import {
 import Keyboard from '@components/Keyboard';
 import ModalTurnHistory from '@components/ModalTurnHistory';
 import PlayersScore from '@components/PlayersScore';
+import { UMAMI_EVENTS } from '@constants/umami';
 
 import { useGamePageHooks } from './GamePage.hooks';
 import classes from './GamePage.module.css';
@@ -71,7 +72,7 @@ const GamePage: FC = () => {
               </Flex>
             </Paper>
           ))}
-          <Button fullWidth mt="md" onClick={handleLeaveGame}>
+          <Button fullWidth mt="md" data-umami-event={UMAMI_EVENTS.LEAVE_GAME} onClick={handleLeaveGame}>
             {t('newGame.title')}
           </Button>
         </Stack>
@@ -82,7 +83,7 @@ const GamePage: FC = () => {
   return (
     <Box className={classes.gamePageContainer}>
       <Group gap="sm" justify="flex-end">
-        <ActionIcon onClick={() => handleOpenHistoryModal()}>
+        <ActionIcon data-umami-event={UMAMI_EVENTS.OPEN_TURN_HISTORY} onClick={() => handleOpenHistoryModal()}>
           <TbHistory />
         </ActionIcon>
         <ActionIcon color="red" onClick={openLeaveGameModal}>

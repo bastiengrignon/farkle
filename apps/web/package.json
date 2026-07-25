@@ -1,6 +1,6 @@
 {
   "name": "web",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "Farkle game score application",
   "license": "MIT",
   "type": "module",
