@@ -22,7 +22,9 @@ export const useLeaderboardHooks = () => {
       .map(([name, wins]) => ({ name, wins }))
       .slice(0, 3)
       .sort((a, b) => b.wins - a.wins);
-    return [1, 0, 2].reduce<PodiumWinner[]>((podiumOrder, position) => [...podiumOrder, top3Winners[position]], []);
+    return [1, 0, 2]
+      .reduce<PodiumWinner[]>((podiumOrder, position) => [...podiumOrder, top3Winners[position]], [])
+      .filter(Boolean);
   }, [finishedGames]);
 
   const mostFarklers = useMemo(

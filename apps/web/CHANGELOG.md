@@ -1,5 +1,11 @@
 # web
 
+## 1.2.1
+
+### Patch Changes
+
+- Fix no leaderboard crash
+
 ## 1.2.0
 
 ### Minor Changes
