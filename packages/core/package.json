@@ -1,6 +1,6 @@
 {
   "name": "@farkle/core",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "private": true,
   "description": "Core package with types and common utilities",
   "license": "MIT",
@@ -25,12 +25,15 @@
   "scripts": {
     "dev": "tsc --watch",
     "build": "tsdown",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest"
   },
   "devDependencies": {
     "@types/node": "^26.1.1",
+    "@vitest/coverage-v8": "^4.1.10",
     "tsdown": "^0.22.14",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10"
   },
   "peerDependencies": {
     "typescript": "^7.0.2"

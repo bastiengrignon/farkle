@@ -1,5 +1,13 @@
 # web
 
+## 1.3.3
+
+### Patch Changes
+
+- Add vitest tests
+- Updated dependencies
+  - @farkle/core@1.2.1
+
 ## 1.3.2
 
 ### Patch Changes

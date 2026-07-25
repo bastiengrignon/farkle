@@ -1,4 +1,4 @@
-import type { FarkleSettings, FarkleState, FinishedGame, Game } from '../types';
+import type { FarkleSettings, Game } from '../types';
 
 export const FARKLE_SCORES = {
   FIFTY: 50,
@@ -32,10 +32,7 @@ export const DEFAULT_FARKLE_SETTINGS: FarkleSettings = {
   revertPlayerScoreOnSameScore: false,
 };
 
-export const getHistory = (history: FarkleState['history'] | null): Game[] => (Array.isArray(history) ? history : []);
-
-export const getFinishedGames = (finishedGames: FarkleState['finishedGames'] | null): FinishedGame[] =>
-  Array.isArray(finishedGames) ? finishedGames : [];
+export const getOrCreateArray = <T>(array: T | null) => (Array.isArray(array) ? array : []);
 
 export const getNextPlayerId = (game: Game): string | null => {
   if (game.players.length === 0) {
@@ -58,5 +55,7 @@ export const advanceTurn = (game: Game): Pick<Game, 'currenPlayerIdTurn' | 'isFi
   };
 };
 
-export const hasReachedWinningScore = (game: Game, score: number): boolean =>
-  game.exactScoreRequired ? score === game.scoreToReach : score >= game.scoreToReach;
+export const hasReachedWinningScore = (
+  game: Pick<Game, 'scoreToReach' | 'exactScoreRequired'>,
+  score: number
+): boolean => (game.exactScoreRequired ? score === game.scoreToReach : score >= game.scoreToReach);

@@ -8,8 +8,8 @@ import {
   DEFAULT_FARKLE_SETTINGS,
   type FarkleState,
   type FinishedGame,
-  getFinishedGames,
-  getHistory,
+  type Game,
+  getOrCreateArray,
   hasReachedWinningScore,
   type TurnResult,
 } from '@farkle/core';
@@ -55,7 +55,7 @@ export const useFarkleStore = create<FarkleState>()(
               turnHistory: state.turnHistory,
             };
             return {
-              finishedGames: [...getFinishedGames(state.finishedGames), finishedGame],
+              finishedGames: [...getOrCreateArray<FinishedGame[]>(state.finishedGames), finishedGame],
               game: null,
               history: [],
               turnHistory: [],
@@ -67,7 +67,7 @@ export const useFarkleStore = create<FarkleState>()(
               return state;
             }
             return {
-              history: [...getHistory(state.history), state.game],
+              history: [...getOrCreateArray<Game[]>(state.history), state.game],
               game: {
                 ...state.game,
                 players: [...state.game.players].map((player) =>
@@ -93,7 +93,7 @@ export const useFarkleStore = create<FarkleState>()(
             }
 
             return {
-              history: [...getHistory(state.history), state.game],
+              history: [...getOrCreateArray<Game[]>(state.history), state.game],
               game: {
                 ...state.game,
                 ...advanceTurn(state.game),
@@ -102,7 +102,7 @@ export const useFarkleStore = create<FarkleState>()(
           }),
         undoLastAction: () =>
           set((state) => {
-            const history = getHistory(state.history);
+            const history = getOrCreateArray<Game[]>(state.history);
             const previousGame = history.at(-1);
 
             if (!previousGame) {
@@ -148,7 +148,7 @@ export const useFarkleStore = create<FarkleState>()(
             };
 
             return {
-              history: [...getHistory(state.history), state.game],
+              history: [...getOrCreateArray<Game[]>(state.history), state.game],
               turnHistory: [...(state.turnHistory || []), newTurnResult],
               game: {
                 ...state.game,
@@ -201,7 +201,7 @@ export const useFarkleStore = create<FarkleState>()(
             );
 
             return {
-              history: [...getHistory(state.history), state.game],
+              history: [...getOrCreateArray<Game[]>(state.history), state.game],
               turnHistory: [...(state.turnHistory || []), newTurnResult],
               game: {
                 ...state.game,
@@ -270,7 +270,7 @@ export const useFarkleStore = create<FarkleState>()(
             }
 
             if (state.settings.revertPlayerScoreOnSameScore && !state.game.finalRoundStartedByPlayerId) {
-              const history = getHistory(state.history);
+              const history = getOrCreateArray<Game[]>(state.history);
               players = players.map((player) => {
                 if (player.id === currentPlayerId) {
                   return player;
@@ -303,7 +303,7 @@ export const useFarkleStore = create<FarkleState>()(
             };
 
             return {
-              history: [...getHistory(state.history), state.game],
+              history: [...getOrCreateArray<Game[]>(state.history), state.game],
               turnHistory: [...(state.turnHistory || []), newTurnResult],
               game: {
                 ...gameWithFinalRound,
@@ -322,7 +322,7 @@ export const useFarkleStore = create<FarkleState>()(
               return state;
             }
             return {
-              history: [...getHistory(state.history), state.game],
+              history: [...getOrCreateArray<Game[]>(state.history), state.game],
               game: {
                 ...state.game,
                 players: [...state.game.players].map((player) =>
