@@ -1,5 +1,11 @@
 # web
 
+## 1.1.3
+
+### Patch Changes
+
+- Add MDX support for rules explanation
+
 ## 1.1.2
 
 ### Patch Changes

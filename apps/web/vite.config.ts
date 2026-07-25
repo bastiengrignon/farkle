@@ -1,4 +1,6 @@
+import mdx from '@mdx-js/rollup';
 import react from '@vitejs/plugin-react';
+import remarkGfm from 'remark-gfm';
 import { type AliasOptions, defineConfig } from 'vite';
 import compression from 'vite-plugin-compression2';
 import { type ManifestOptions, VitePWA } from 'vite-plugin-pwa';
@@ -57,8 +59,10 @@ const manifestConfig: Partial<ManifestOptions> = {
 
 export default defineConfig({
   plugins: [
+    mdx({ providerImportSource: '@mdx-js/react', remarkPlugins: [remarkGfm] }),
     react(),
     VitePWA({
+      selfDestroying: true,
       registerType: 'prompt',
       injectRegister: 'auto',
       includeAssets: ['**/*'],

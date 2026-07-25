@@ -1,0 +1,101 @@
+# 🎲 Règles du Farkle (10 000)
+
+Le **Farkle**, aussi appelé **10 000**, est un jeu de dés où les joueurs tentent d'atteindre un score cible en accumulant des combinaisons de dés.
+
+Le principe est simple :
+
+1. Le joueur lance les dés.
+2. Il doit sélectionner au moins une combinaison rapportant des points.
+3. Il peut :
+    - **Banquer** ses points et terminer son tour.
+    - **Continuer** à lancer les dés restants afin d'augmenter son score.
+4. Si aucun dé ne rapporte de point lors d'un lancer, le joueur fait un **Farkle** et perd tous les points accumulés pendant ce tour.
+
+# Décompte des points
+
+| Combinaison   |   Score |
+|---------------|--------:|
+| 1             |     100 |
+| 5             |      50 |
+| ------------- | ------- |
+| 111           |    1000 |
+| 222           |     200 |
+| 333           |     300 |
+| 444           |     400 |
+| 555           |     500 |
+| 666           |     600 |
+| x4            |    1000 |
+| x5            |    1500 |
+| x6            |    2000 |
+| Suite         |    1500 |
+| Trois paires  |    1500 |
+| x4 + paire    |    1500 |
+| Deux brelans  |    2500 |
+
+1 ou 5 : Les autres dés seuls ne rapportent aucun point.
+Lorsqu'une combinaison comporte plus de trois dés identiques, le score est doublé pour chaque dé supplémentaire.
+Obtenir une suite complète avec les six dés rapporte : **1500 points**
+Trois paires différentes : **1500 points**
+
+# Fin de partie
+
+La partie se termine lorsqu'un joueur atteint ou dépasse le score cible (généralement **10 000 points**).
+Les autres joueurs bénéficient d'un dernier tour.
+
+# Options disponibles
+
+## 🎲 6 dés Farkle
+
+Lorsqu'un joueur obtient un Farkle alors qu'il lançait les **6 dés**, un bonus prédéfini est appliquée.<br/>
+Cette règle est **désactivée** par défaut.
+
+
+## 💀 3 Farkles consécutifs
+
+Si un joueur réalise **3 Farkles consécutifs**, une pénalité prédéfinie est appliquée.<br/>
+Cette règle est **désactivée** par défaut.
+
+
+## 🔄 Score identique à un autre joueur
+
+Lorsqu'un joueur banquera exactement le même score qu'un autre joueur :
+
+- le joueur actif conserve son score
+- le ou les joueurs possédant exactement ce score sont remis à leur score précedent.
+
+Exemple :
+
+| Joueur | Score avant |
+|--------|------------:|
+| Alice  |        4200 |
+| Bob    |        3800 |
+
+Alice avait **3500** points, elle fait **700** points et banque.<br/>
+Bob fait **400** points et banque.
+
+Résultat :
+
+| Joueur | Score |
+|--------|------:|
+| Alice  |  3500 |
+| Bob    |  4200 |
+
+Cette règle est **désactivée** par défaut.
+
+
+## 🚀 Score minimum pour commencer
+
+Un joueur doit réaliser un score minimum **au cours d'un même tour** avant de pouvoir inscrire des points sur son score total.
+
+Exemple avec une valeur de **500** :
+
+- Tour à 350 → impossible de banquer.
+- Tour à 450 → impossible.
+- Tour à 700 → le joueur entre dans la partie avec 700 points.
+
+Une fois ce seuil atteint, les tours suivants peuvent être banqués normalement.<br/>
+Cette règle est **activée** par défaut à 500 points.
+
+
+
+Chaque variante peut être activée indépendamment afin de reproduire les nombreuses versions du Farkle.
