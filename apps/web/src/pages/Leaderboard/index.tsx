@@ -1,19 +1,34 @@
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TbTrophy } from 'react-icons/tb';
 
-import { Box, Card, Flex, Group, Stack, Text, Title } from '@mantine/core';
+import { PieChart } from '@mantine/charts';
+import { Center, DEFAULT_THEME, Fieldset, Flex, SimpleGrid, Stack, Text } from '@mantine/core';
 import { DataTable, type DataTableColumn } from 'mantine-datatable';
 
+import LeaderboardSectionTitle from '@components/LeaderboardSectionTitle';
+import WinnerPodium from '@components/WinnerPodium';
 import type { FinishedGame } from '@farkle/core';
 import PageLayout from '@pages/PageLayout';
 
 import { useLeaderboardHooks } from './Leaderboard.hooks';
 
+const getUniqueRandomColors = Object.keys(DEFAULT_THEME.colors)
+  .filter((key) => !['dark', 'gray', 'cyan', 'indigo', 'lime', 'teal'].includes(key))
+  .sort((a, b) => a.localeCompare(b))
+  .flatMap((key) => DEFAULT_THEME.colors[key][6]);
+
 const Leaderboard: FC = () => {
   const { t } = useTranslation('leaderboard');
-  const { sortedFinishedGames, topWinners, topFarklers, sortStatus, setSortStatus } = useLeaderboardHooks();
+  const {
+    sortedFinishedGames,
+    topWinners,
+    mostFarklers,
+    mostFarklesInOneGame,
+    mostFarklesInARow,
+    sortStatus,
+    setSortStatus,
+  } = useLeaderboardHooks();
 
   const columns = useMemo<DataTableColumn<FinishedGame>[]>(
     () => [
@@ -77,118 +92,88 @@ const Leaderboard: FC = () => {
       <Stack>
         {/* Podium for top 3 winners */}
         {topWinners.length > 0 && (
-          <Card withBorder>
-            <Title order={4} mb="md">
-              <Group gap="xs">
-                <TbTrophy />
-                {t('leaderboard.topWinners')}
-              </Group>
-            </Title>
-            <Flex direction="column" gap="sm">
-              {topWinners.map((winner, index) => (
-                <Flex
-                  key={winner.name}
-                  align="center"
-                  gap="md"
-                  p="sm"
-                  style={{
-                    backgroundColor:
-                      index === 0
-                        ? 'var(--mantine-color-yellow-1)'
-                        : index === 1
-                          ? 'var(--mantine-color-gray-1)'
-                          : index === 2
-                            ? 'var(--mantine-color-orange-1)'
-                            : 'transparent',
-                    borderRadius: 'var(--mantine-radius-md)',
-                  }}
-                >
-                  <Text fw="bold" size="lg" c={index === 0 ? 'yellow.7' : index === 1 ? 'gray.7' : 'orange.7'}>
-                    {index + 1}.
-                  </Text>
-                  <Text flex={1} fw={500}>
-                    {winner.name}
-                  </Text>
-                  <Box
-                    px="sm"
-                    py="xs"
-                    style={{
-                      backgroundColor: 'var(--mantine-color-blue-light)',
-                      borderRadius: 'var(--mantine-radius-md)',
-                    }}
-                  >
-                    <Text fw="bold">{t('leaderboard.wins', { wins: winner.wins })}</Text>
-                  </Box>
-                </Flex>
-              ))}
-            </Flex>
-          </Card>
+          <Fieldset legend={<LeaderboardSectionTitle title={t('leaderboard.topWinners')} />}>
+            <WinnerPodium winners={topWinners} t={t} />
+          </Fieldset>
         )}
+        <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }}>
+          {mostFarklers.length > 0 && (
+            <Fieldset legend={<LeaderboardSectionTitle title={t('leaderboard.topFarklers')} />}>
+              <Center>
+                <PieChart
+                  data={mostFarklers.map(({ name, count }, index) => ({
+                    name,
+                    value: count,
+                    color: getUniqueRandomColors[index % mostFarklers.length],
+                  }))}
+                  withTooltip
+                  tooltipDataSource="segment"
+                  withLabels
+                  labelsPosition="inside"
+                  labelsType="name"
+                  size={200}
+                />
+              </Center>
+            </Fieldset>
+          )}
+          {mostFarklesInOneGame.length > 0 && (
+            <Fieldset legend={<LeaderboardSectionTitle title={t('leaderboard.mostFarklesInOneGameTitle')} />}>
+              <Center>
+                <PieChart
+                  data={mostFarklesInOneGame.map(({ name, count }, index) => ({
+                    name,
+                    value: count,
+                    color: getUniqueRandomColors[index % mostFarklesInOneGame.length],
+                  }))}
+                  withTooltip
+                  tooltipDataSource="segment"
+                  withLabelsLine
+                  labelsPosition="inside"
+                  labelsType="name"
+                  withLabels
+                  size={200}
+                />
+              </Center>
+            </Fieldset>
+          )}
+          {mostFarklesInARow.length > 0 && (
+            <Fieldset legend={<LeaderboardSectionTitle title={t('leaderboard.mostFarklesInARowTitle')} />}>
+              <Center>
+                <PieChart
+                  data={mostFarklesInARow.map(({ name, count }, index) => ({
+                    name,
+                    value: count,
+                    color: getUniqueRandomColors[index % mostFarklesInARow.length],
+                  }))}
+                  withTooltip
+                  tooltipDataSource="segment"
+                  withLabelsLine
+                  labelsPosition="inside"
+                  labelsType="name"
+                  withLabels
+                  size={200}
+                />
+              </Center>
+            </Fieldset>
+          )}
+        </SimpleGrid>
 
-        {/* Top 3 players with most farkles */}
-        {topFarklers.length > 0 && (
-          <Card withBorder>
-            <Title order={4} mb="md">
-              <Group gap="xs">
-                <TbTrophy />
-                {t('leaderboard.topFarklers')}
-              </Group>
-            </Title>
-            <Flex direction="column" gap="sm">
-              {topFarklers.map((farkler, index) => (
-                <Flex
-                  key={farkler.name}
-                  align="center"
-                  gap="md"
-                  p="sm"
-                  style={{
-                    backgroundColor:
-                      index === 0
-                        ? 'var(--mantine-color-red-1)'
-                        : index === 1
-                          ? 'var(--mantine-color-gray-1)'
-                          : index === 2
-                            ? 'var(--mantine-color-orange-1)'
-                            : 'transparent',
-                    borderRadius: 'var(--mantine-radius-md)',
-                  }}
-                >
-                  <Text fw="bold" size="lg" c={index === 0 ? 'red.7' : index === 1 ? 'gray.7' : 'orange.7'}>
-                    {index + 1}.
-                  </Text>
-                  <Text flex={1} fw={500}>
-                    {farkler.name}
-                  </Text>
-                  <Box
-                    px="sm"
-                    py="xs"
-                    style={{
-                      backgroundColor: 'var(--mantine-color-red-light)',
-                      borderRadius: 'var(--mantine-radius-md)',
-                    }}
-                  >
-                    <Text fw="bold">{t('leaderboard.farkles', { count: farkler.count })}</Text>
-                  </Box>
-                </Flex>
-              ))}
-            </Flex>
-          </Card>
-        )}
-
-        <DataTable
-          withTableBorder
-          withColumnBorders
-          borderRadius="md"
-          striped
-          highlightOnHover
-          height={450}
-          columns={columns}
-          noRecordsText={t('leaderboard.noGames')}
-          records={sortedFinishedGames}
-          idAccessor="id"
-          sortStatus={sortStatus}
-          onSortStatusChange={setSortStatus}
-        />
+        <Fieldset legend={<LeaderboardSectionTitle title={t('leaderboard.gameList')} />}>
+          <DataTable
+            withTableBorder
+            withColumnBorders
+            borderRadius="md"
+            striped
+            highlightOnHover
+            height={450}
+            columns={columns}
+            noRecordsText={t('leaderboard.noGames')}
+            records={sortedFinishedGames}
+            idAccessor="id"
+            sortStatus={sortStatus}
+            onSortStatusChange={setSortStatus}
+          />
+        </Fieldset>
       </Stack>
     </PageLayout>
   );

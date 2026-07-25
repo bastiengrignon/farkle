@@ -82,3 +82,5 @@ export interface FarkleState {
   history: Game[];
   finishedGames: FinishedGame[];
 }
+
+export type PodiumWinner = { name: string; wins: number };

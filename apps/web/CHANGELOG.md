@@ -1,5 +1,16 @@
 # web
 
+## 1.2.0
+
+### Minor Changes
+
+- Upgrade leaderboard statistics design
+
+### Patch Changes
+
+- Updated dependencies
+  - @farkle/core@1.2.0
+
 ## 1.1.8
 
 ### Patch Changes
