@@ -4,6 +4,7 @@ import remarkGfm from 'remark-gfm';
 import { type AliasOptions, defineConfig } from 'vite';
 import compression from 'vite-plugin-compression2';
 import { type ManifestOptions, VitePWA } from 'vite-plugin-pwa';
+import type { GenerateSWOptions } from 'workbox-build';
 
 import { fileURLToPath } from 'node:url';
 
@@ -82,63 +83,68 @@ const manifestConfig: Partial<ManifestOptions> = {
   ],
 };
 
+const workboxConfig: Partial<GenerateSWOptions> = {
+  globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff2}'],
+  cleanupOutdatedCaches: true,
+  runtimeCaching: [
+    {
+      urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'google-fonts-cache',
+        expiration: {
+          maxEntries: 10,
+          maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+        },
+        cacheableResponse: {
+          statuses: [0, 200],
+        },
+      },
+    },
+    {
+      urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'gstatic-fonts-cache',
+        expiration: {
+          maxEntries: 10,
+          maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+        },
+        cacheableResponse: {
+          statuses: [0, 200],
+        },
+      },
+    },
+    {
+      urlPattern: /^https:\/\/cdn\.jsdelivr\.net\/.*/i,
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'jsdelivr-cache',
+        expiration: {
+          maxEntries: 20,
+          maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+        },
+        cacheableResponse: {
+          statuses: [0, 200],
+        },
+      },
+    },
+  ],
+};
+
 export default defineConfig({
   plugins: [
     mdx({ providerImportSource: '@mdx-js/react', remarkPlugins: [remarkGfm] }),
     react(),
     VitePWA({
+      devOptions: {
+        enabled: true,
+      },
       registerType: 'prompt',
       injectRegister: 'auto',
       includeAssets: ['**/*'],
       manifest: manifestConfig,
-      workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
-        cleanupOutdatedCaches: true,
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'google-fonts-cache',
-              expiration: {
-                maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
-              },
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
-            },
-          },
-          {
-            urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'gstatic-fonts-cache',
-              expiration: {
-                maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
-              },
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
-            },
-          },
-          {
-            urlPattern: /^https:\/\/cdn\.jsdelivr\.net\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'jsdelivr-cache',
-              expiration: {
-                maxEntries: 20,
-                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
-              },
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
-            },
-          },
-        ],
-      },
+      workbox: workboxConfig,
     }),
     compression({
       algorithms: ['gzip', 'brotliCompress'],

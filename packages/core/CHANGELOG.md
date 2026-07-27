@@ -1,5 +1,11 @@
 # @farkle/core
 
+## 1.2.3
+
+### Patch Changes
+
+- Fix default vitest run command & upgrade PWA options
+
 ## 1.2.2
 
 ### Patch Changes

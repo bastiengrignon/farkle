@@ -1,4 +1,4 @@
-import { type FC, useMemo } from 'react';
+import { type FC, Suspense, useMemo } from 'react';
 import { Outlet, useNavigation } from 'react-router';
 
 import { AppShell, LoadingOverlay, useComputedColorScheme } from '@mantine/core';
@@ -19,8 +19,9 @@ const Layout: FC = () => {
         <Header />
       </AppShell.Header>
       <AppShell.Main pos="relative">
-        <LoadingOverlay visible={isLoading} zIndex={1000} overlayProps={{ blur: 3 }} />
-        <Outlet />
+        <Suspense fallback={<LoadingOverlay visible={isLoading} zIndex={1000} overlayProps={{ blur: 3 }} />}>
+          <Outlet />
+        </Suspense>
       </AppShell.Main>
     </AppShell>
   );
