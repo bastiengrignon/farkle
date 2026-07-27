@@ -137,9 +137,6 @@ export default defineConfig({
     mdx({ providerImportSource: '@mdx-js/react', remarkPlugins: [remarkGfm] }),
     react(),
     VitePWA({
-      devOptions: {
-        enabled: true,
-      },
       registerType: 'prompt',
       injectRegister: 'auto',
       includeAssets: ['**/*'],

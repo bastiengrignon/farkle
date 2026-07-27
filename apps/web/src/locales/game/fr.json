@@ -1,0 +1,48 @@
+{
+  "bank": {
+    "error": {
+      "message": "Vous devez avoir au moins {{minimum}} points pour votre premier score",
+      "title": "Impossible de valider"
+    }
+  },
+  "finished": {
+    "winner_one": "Gagnant"
+  },
+  "keyboard": {
+    "bank": "Banque",
+    "computedPreviewScore": "({{score}})",
+    "farkle": "Tout perdu !",
+    "fiveTimes": "5x",
+    "fourTimes": "4x",
+    "fourTimesOnePair": "4x + Paire",
+    "modal": {
+      "dice": "{{type}} d'un type"
+    },
+    "sixTimes": "6x",
+    "straight": "Suite",
+    "threePair": "3 Paires",
+    "threeTimes": "3x",
+    "twoTriplets": "2 Triplettes"
+  },
+  "lastRound": {
+    "message": "Il vous reste encore une chance de gagner !",
+    "title": "Dernier tour"
+  },
+  "leave": {
+    "button": "Quitter",
+    "title": "Quitter la partie ?"
+  },
+  "newGame": {
+    "addPlayer": "Ajouter un joueur",
+    "exactScoreRequired": "Exiger le score exact pour gagner",
+    "start": "Commencer",
+    "title": "Nouvelle partie",
+    "twoPlayersMinimum": "Au moins 2 joueurs pour lancer la partie"
+  },
+  "turnHistory": {
+    "farkle": "Farkle",
+    "noTurns": "Aucun tour pour l'instant",
+    "title": "Historique des tours",
+    "turn": "Tour"
+  }
+}

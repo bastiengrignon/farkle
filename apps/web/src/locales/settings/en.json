@@ -1,0 +1,26 @@
+{
+  "settings": {
+    "minimumFirstScore": {
+      "score": "Minimum points required",
+      "switch": "Enable minimum first score",
+      "title": "Minimum first score"
+    },
+    "revertPlayerScoreOnSameScore": {
+      "alertMesage": "You revert to previous score, a player did the same score as you",
+      "switch": "Revert the player's score when matching another player",
+      "title": "Matching player score"
+    },
+    "sixDiceFarkle": {
+      "switch": "Award points",
+      "title": "6-dice Farkle"
+    },
+    "storedPlayers": "Stored players",
+    "threeConsecutiveFarkle": {
+      "alertMessage": "3 consecutive farkles, you loose {{points}} points",
+      "switch": "Loose points",
+      "title": "3 consecutive farkles"
+    },
+    "title": "Settings",
+    "tripleOneScore": "Triple 1 score"
+  }
+}

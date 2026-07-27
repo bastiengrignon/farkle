@@ -2,15 +2,14 @@ import { initReactI18next } from 'react-i18next';
 
 import { BackendFetch, DevTools, I18nextPlugin, Tolgee, withTolgee } from '@tolgee/i18next';
 import i18n from 'i18next';
-import ICU from 'i18next-icu';
+import LanguageDetector from 'i18next-browser-languagedetector';
 
 const NAMESPACES = ['common', 'settings'];
 export const SUPPORTED_LANGUAGES = ['fr', 'en'] as const;
 
-// type Namespace = (typeof NAMESPACES)[number];
+type Namespace = (typeof NAMESPACES)[number];
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 
-/*
 const bindNamespacesByLanguage =
   (language: SupportedLanguage) => async (namespaceList: Promise<object>, namespace: Namespace) => ({
     ...(await namespaceList),
@@ -22,7 +21,6 @@ const indexTranslationsByLanguage = async (resourceList: Promise<object>, langua
 };
 
 const resources = await SUPPORTED_LANGUAGES.reduce(indexTranslationsByLanguage, Promise.resolve({}));
-*/
 
 export const tolgee = Tolgee()
   .use(DevTools())
@@ -31,13 +29,6 @@ export const tolgee = Tolgee()
     BackendFetch({
       prefix: import.meta.env.VITE_TOLGEE_CDN,
       fallbackOnFail: true,
-      getData: async (response) => {
-        if (!response.ok) {
-          console.warn('Tolgee: Network response was not ok, using static translations');
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      },
     })
   )
   .init({
@@ -48,11 +39,11 @@ export const tolgee = Tolgee()
     defaultNs: 'common',
     apiUrl: import.meta.env.VITE_TOLGEE_API_URL,
     apiKey: import.meta.env.VITE_TOLGEE_API_KEY,
-    // staticData: resources,
+    staticData: resources,
   });
 
 withTolgee(i18n, tolgee)
-  .use(ICU)
+  .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     lng: 'fr',

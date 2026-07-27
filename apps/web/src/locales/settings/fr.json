@@ -1,0 +1,26 @@
+{
+  "settings": {
+    "minimumFirstScore": {
+      "score": "Points minimum requis",
+      "switch": "Activer le score minimum initial",
+      "title": "Score minimum initial"
+    },
+    "revertPlayerScoreOnSameScore": {
+      "alertMesage": "Vous retournez au score précédent, un joueur à fait le même score que vous",
+      "switch": "Annuler le score du joueur lorsqu'il égale celui d'un autre joueur",
+      "title": "Score identique à un autre joueur"
+    },
+    "sixDiceFarkle": {
+      "switch": "Attribuer des points",
+      "title": "Farkle avec 6 dés"
+    },
+    "storedPlayers": "Joueurs enregistrés",
+    "threeConsecutiveFarkle": {
+      "alertMessage": "3 farkles consécutif, vous perdez {{points}} points",
+      "switch": "Perte de points",
+      "title": "3 farkles consécutif"
+    },
+    "title": "Paramètres",
+    "tripleOneScore": "Score de triple 1"
+  }
+}

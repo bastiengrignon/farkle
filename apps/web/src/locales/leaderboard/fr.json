@@ -1,0 +1,15 @@
+{
+  "leaderboard": {
+    "date": "Date",
+    "gameList": "Liste des parties",
+    "mostFarklesInARowTitle": "Plus de Farkles à la suite",
+    "mostFarklesInOneGameTitle": "Plus de Farkles en une partie",
+    "noGames": "Aucune partie terminée pour l'instant",
+    "players": "Joueurs",
+    "scoreToReach": "Score cible",
+    "topFarklers": "Plus de Farkles",
+    "topWinners": "Meilleurs gagnants",
+    "winners": "Gagnant(s)",
+    "wins": "{{wins}} victoires"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "bank": {
+    "error": {
+      "message": "You need at least {{minimum}} points for your first score",
+      "title": "Cannot bank"
+    }
+  },
+  "finished": {
+    "winner_one": "Winner"
+  },
+  "keyboard": {
+    "bank": "Bank",
+    "computedPreviewScore": "({{score}})",
+    "farkle": "Farkle!",
+    "fiveTimes": "x5",
+    "fourTimes": "x4",
+    "fourTimesOnePair": "x4 + Pair",
+    "modal": {
+      "dice": "{{type}} of a kind"
+    },
+    "sixTimes": "x6",
+    "straight": "Straight",
+    "threePair": "3 Pairs",
+    "threeTimes": "x3",
+    "twoTriplets": "2 Triplets"
+  },
+  "lastRound": {
+    "message": "You still have a chance to win !",
+    "title": "Final round"
+  },
+  "leave": {
+    "button": "Exit",
+    "title": "Leave the game?"
+  },
+  "newGame": {
+    "addPlayer": "Add a player",
+    "exactScoreRequired": "Require the exact winning score",
+    "start": "Start",
+    "title": "New game",
+    "twoPlayersMinimum": "At least 2 players to start the game"
+  },
+  "turnHistory": {
+    "farkle": "Farkle",
+    "noTurns": "No turns yet",
+    "title": "Turn History",
+    "turn": "Turn"
+  }
+}

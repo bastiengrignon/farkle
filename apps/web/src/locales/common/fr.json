@@ -1,0 +1,18 @@
+{
+  "cancel": "Annuler",
+  "error": "Erreur: {{message}}",
+  "errorOccurred": "Une erreur est survenue",
+  "finished": {
+    "winner_other": "Gagnants"
+  },
+  "goBack": "Retour à l'accueil",
+  "home": {
+    "brand": "10 000",
+    "leaderboard": "Classement",
+    "newGame": "Nouvelle partie",
+    "rules": "Règles",
+    "settings": "Paramètres"
+  },
+  "newVersion": "Nouvelle version disponible, recharger la page ?",
+  "save": "Enregistrer"
+}

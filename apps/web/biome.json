@@ -2,7 +2,7 @@
   "root": false,
   "extends": "//",
   "files": {
-    "includes": ["**/*.ts", "**/*.tsx"]
+    "includes": ["**/*.ts", "**/*.tsx", "!**/locales/**/*.json"]
   },
   "assist": {
     "enabled": true,

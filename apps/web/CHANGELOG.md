@@ -1,5 +1,11 @@
 # web
 
+## 1.3.7
+
+### Patch Changes
+
+- Add static languages for offline use & remove icU formatter
+
 ## 1.3.6
 
 ### Patch Changes

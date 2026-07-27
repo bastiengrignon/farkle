@@ -1,0 +1,18 @@
+{
+  "cancel": "Cancel",
+  "error": "Error: {{mesage}}",
+  "errorOccurred": "An error occured",
+  "finished": {
+    "winner_other": "Winners"
+  },
+  "goBack": "Back to homepage",
+  "home": {
+    "brand": "Farkle",
+    "leaderboard": "Leaderboard",
+    "newGame": "New game",
+    "rules": "Rules",
+    "settings": "Settings"
+  },
+  "newVersion": "New version available, reload the page?",
+  "save": "Save"
+}

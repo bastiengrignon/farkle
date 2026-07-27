@@ -1,0 +1,15 @@
+{
+  "leaderboard": {
+    "date": "Date",
+    "gameList": "Games list",
+    "mostFarklesInARowTitle": "Most Farkles in a row",
+    "mostFarklesInOneGameTitle": "Most Farkles in one game",
+    "noGames": "No finished games yet",
+    "players": "Players",
+    "scoreToReach": "Target score",
+    "topFarklers": "Most Farkles",
+    "topWinners": "Top winners",
+    "winners": "Winner(s)",
+    "wins": "{{wins}} wins"
+  }
+}

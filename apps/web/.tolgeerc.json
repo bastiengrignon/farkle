@@ -1,0 +1,10 @@
+{
+  "$schema": "https://docs.tolgee.io/cli-schema.json",
+  "projectId": 33580,
+  "pull": {
+    "path": "./src/locales"
+  },
+  "push": {
+    "filesTemplate": "./src/locales/{namespace}/{languageTag}.json"
+  }
+}
