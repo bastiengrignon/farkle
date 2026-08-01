@@ -1,5 +1,11 @@
 # web
 
+## 1.3.8
+
+### Patch Changes
+
+- Fix wrong path for translations
+
 ## 1.3.7
 
 ### Patch Changes

@@ -13,7 +13,7 @@ export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 const bindNamespacesByLanguage =
   (language: SupportedLanguage) => async (namespaceList: Promise<object>, namespace: Namespace) => ({
     ...(await namespaceList),
-    [namespace]: (await import(`./locales/${namespace}/${language}.json`)).default,
+    [namespace]: (await import(`./src/locales/${namespace}/${language}.json`)).default,
   });
 const indexTranslationsByLanguage = async (resourceList: Promise<object>, language: SupportedLanguage) => {
   const translations = await NAMESPACES.reduce(bindNamespacesByLanguage(language), Promise.resolve({}));
