@@ -1,5 +1,11 @@
 # web
 
+## 1.3.10
+
+### Patch Changes
+
+- Update PWA display
+
 ## 1.3.9
 
 ### Patch Changes
