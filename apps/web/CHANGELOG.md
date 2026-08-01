@@ -1,5 +1,11 @@
 # web
 
+## 1.3.9
+
+### Patch Changes
+
+- Fix path for i18n
+
 ## 1.3.8
 
 ### Patch Changes
