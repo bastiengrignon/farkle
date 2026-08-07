@@ -144,21 +144,25 @@ const Settings: FC = () => {
               {t('common:save')}
             </Button>
           </Flex>
-          <Divider />
-          <Fieldset legend={t('settings.storedPlayers')}>
-            <Stack>
-              {commonPlayers.map((player) => (
-                <Card key={player.name}>
-                  <Flex justify="space-between">
-                    <Text>{player.name}</Text>
-                    <ActionIcon color="red" onClick={() => removeStoredPlayer(player.name)}>
-                      <TbX />
-                    </ActionIcon>
-                  </Flex>
-                </Card>
-              ))}
-            </Stack>
-          </Fieldset>
+          {commonPlayers.length > 0 && (
+            <>
+              <Divider />
+              <Fieldset legend={t('settings.storedPlayers')}>
+                <Stack>
+                  {commonPlayers.map((player) => (
+                    <Card key={player.name}>
+                      <Flex justify="space-between">
+                        <Text>{player.name}</Text>
+                        <ActionIcon color="red" onClick={() => removeStoredPlayer(player.name)}>
+                          <TbX />
+                        </ActionIcon>
+                      </Flex>
+                    </Card>
+                  ))}
+                </Stack>
+              </Fieldset>
+            </>
+          )}
         </Stack>
       </form>
     </PageLayout>

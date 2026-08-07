@@ -1,5 +1,11 @@
 # web
 
+## 1.3.11
+
+### Patch Changes
+
+- Don't display registered players if empty
+
 ## 1.3.10
 
 ### Patch Changes
