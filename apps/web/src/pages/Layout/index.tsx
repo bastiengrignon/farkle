@@ -14,7 +14,12 @@ const Layout: FC = () => {
   const isLoading = useMemo(() => navigation.state === 'loading', [navigation.state]);
 
   return (
-    <AppShell header={{ height: 60 }} padding="xs" bg={colorScheme === 'dark' ? 'dark.5' : 'gray.2'}>
+    <AppShell 
+      header={{ height: 60 }}
+      style={{ paddingTop: `calc(env(safe-area-inset-top) + var(--mantine-spacing-md))` }}
+      padding="xs" 
+      bg={colorScheme === 'dark' ? 'dark.5' : 'gray.2'}
+      >
       <AppShell.Header bg="blue.5" p="xs">
         <Header />
       </AppShell.Header>
