@@ -60,7 +60,7 @@ const ModalTurnHistory: FC<ModalTurnHistoryProps> = ({
           ) : (
             <Text c="green" fw="bold">
               +{turn.scoreBanked}
-              {turn.isSixDiceFarkle ? `(${t('settings.sixDiceFarkle.title')})` : null}
+              {turn.isSixDiceFarkle ? `(${t('settings:settings.sixDiceFarkle.title')})` : null}
             </Text>
           );
         },
