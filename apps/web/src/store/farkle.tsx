@@ -233,7 +233,6 @@ export const useFarkleStore = create<FarkleState>()(
                 message: i18n.t('game:bank.error.message', { minimum: minimumFirstScoreValue }),
                 position: 'top-center',
                 color: 'red',
-                autoClose: false,
               });
               return state;
             }
@@ -265,7 +264,6 @@ export const useFarkleStore = create<FarkleState>()(
                 message: i18n.t('game:lastRound.message'),
                 position: 'top-center',
                 color: 'orange',
-                autoClose: false,
               });
             }
 
