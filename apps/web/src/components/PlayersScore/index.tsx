@@ -31,7 +31,7 @@ const PlayersScore: FC<PlayersScoreProps> = ({ game, turnHistory, onPlayerClick 
   const { playerColors, getPlayerTurnCount } = usePlayersScoreHooks({ game, turnHistory });
 
   return (
-    <>
+    <ScrollArea flex={1} mih={50}>
       {game.players.map((player, index) => {
         const progress = game.scoreToReach > 0 ? Math.min((player.score / game.scoreToReach) * 100, 100) : 0;
         const turnStats = getPlayerTurnCount(player.id);
