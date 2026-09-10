@@ -82,7 +82,7 @@ const GamePage: FC = () => {
 
   return (
     <Box className={classes.gamePageContainer}>
-      <Group gap="sm" justify="flex-end">
+      <Group my="sm" gap="sm" justify="flex-end">
         <ActionIcon data-umami-event={UMAMI_EVENTS.OPEN_TURN_HISTORY} onClick={() => handleOpenHistoryModal()}>
           <TbHistory />
         </ActionIcon>
