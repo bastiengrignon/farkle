@@ -74,7 +74,7 @@ const PlayersScore: FC<PlayersScoreProps> = ({ game, turnHistory, onPlayerClick 
           </Paper>
         );
       })}
-    </>
+    </ScrollArea>
   );
 };
 
