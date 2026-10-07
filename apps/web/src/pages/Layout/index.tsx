@@ -14,23 +14,16 @@ const Layout: FC = () => {
   const isLoading = useMemo(() => navigation.state === 'loading', [navigation.state]);
 
   return (
-    <AppShell 
+    <AppShell
       header={{ height: 60 }}
       style={{ height: '100%' }}
-      padding="xs" 
+      padding="xs"
       bg={colorScheme === 'dark' ? 'dark.5' : 'gray.2'}
-      >
-      <AppShell.Header 
-        bg="blue.5" 
-        p="xs"
-        style={{
-          paddingTop: 'env(safe-area-inset-top)',
-          height: 'calc(60px + env(safe-area-inset-top))',
-        }}
-      >
+    >
+      <AppShell.Header bg="blue.5" p="xs">
         <Header />
       </AppShell.Header>
-      <AppShell.Main pos="relative" style={{ height: 'calc(100% - 60px - env(safe-area-inset-top))' }}>
+      <AppShell.Main pos="relative">
         <Suspense fallback={<LoadingOverlay visible={isLoading} zIndex={1000} overlayProps={{ blur: 3 }} />}>
           <Outlet />
         </Suspense>

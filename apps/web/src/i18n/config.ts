@@ -29,6 +29,13 @@ export const tolgee = Tolgee()
     BackendFetch({
       prefix: import.meta.env.VITE_TOLGEE_CDN,
       fallbackOnFail: true,
+      getData: async (response) => {
+        if (!response.ok) {
+          console.warn('Tolgee: Network response was not ok, using static translations');
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      },
     })
   )
   .init({

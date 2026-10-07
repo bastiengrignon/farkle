@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router';
 
 import { useDisclosure } from '@mantine/hooks';
 
+import { replaceRouteParams } from '@farkle/core';
 import { useFarkleStore } from '@store/farkle';
 
 import { routes } from '../../router';
@@ -51,6 +52,12 @@ export const useGamePageHooks = () => {
       handleLeaveGame();
     }
   }, [game, gameId, handleLeaveGame]);
+
+  useEffect(() => {
+    if (game?.isFinished) {
+      navigate(replaceRouteParams(routes.game.end, { gameId: game.id }));
+    }
+  }, [navigate, game]);
 
   return {
     game,

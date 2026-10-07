@@ -2,23 +2,7 @@ import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TbHistory, TbLogout } from 'react-icons/tb';
 
-import confetti from '@hiseb/confetti';
-
-import {
-  ActionIcon,
-  Box,
-  Button,
-  Center,
-  DEFAULT_THEME,
-  Flex,
-  Group,
-  Modal,
-  NumberFormatter,
-  Paper,
-  Stack,
-  Text,
-  Title,
-} from '@mantine/core';
+import { ActionIcon, Box, Button, Group, Modal } from '@mantine/core';
 
 import Keyboard from '@components/Keyboard';
 import ModalTurnHistory from '@components/ModalTurnHistory';
@@ -48,41 +32,9 @@ const GamePage: FC = () => {
     return null;
   }
 
-  if (game.isFinished) {
-    const winners = game.players.filter((player) =>
-      game.exactScoreRequired ? player.score === game.scoreToReach : player.score >= game.scoreToReach
-    );
-    confetti({
-      color: Object.values(DEFAULT_THEME.colors).map((color) => color[5]),
-      count: 150,
-      fade: false,
-    });
-
-    return (
-      <Center p="md" mih="calc(100dvh - var(--app-shell-header-offset, 0rem))">
-        <Stack w="100%" maw={500}>
-          <Title order={2} ta="center">
-            {t('finished.winner', { count: winners.length })}
-          </Title>
-          {winners.map((winner) => (
-            <Paper key={winner.id} withBorder p="md">
-              <Flex justify="space-between" align="center">
-                <Text fw="bold">{winner.name}</Text>
-                <NumberFormatter value={winner.score} thousandSeparator=" " />
-              </Flex>
-            </Paper>
-          ))}
-          <Button fullWidth mt="md" data-umami-event={UMAMI_EVENTS.LEAVE_GAME} onClick={handleLeaveGame}>
-            {t('newGame.title')}
-          </Button>
-        </Stack>
-      </Center>
-    );
-  }
-
   return (
     <Box className={classes.gamePageContainer}>
-      <Group my="sm" gap="sm" justify="flex-end">
+      <Group gap="sm" justify="flex-end">
         <ActionIcon data-umami-event={UMAMI_EVENTS.OPEN_TURN_HISTORY} onClick={() => handleOpenHistoryModal()}>
           <TbHistory />
         </ActionIcon>

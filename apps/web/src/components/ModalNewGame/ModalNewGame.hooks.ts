@@ -60,7 +60,7 @@ export const useModalNewGameHooks = ({ t }: ModalFarkleNewGameHooksProps) => {
   const handleSubmitNewGame = useCallback(
     (game: Omit<Game, 'currentPlayerIdTurn'>) => {
       startNewGame(game);
-      navigate(replaceRouteParams(routes.game, { gameId: game.id }));
+      navigate(replaceRouteParams(routes.game.id, { gameId: game.id }));
     },
     [navigate, startNewGame]
   );

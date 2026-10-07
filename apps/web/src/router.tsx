@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router';
 
 import ErrorBoundary from '@pages/ErrorBoundary';
 import GamePage from '@pages/GamePage';
+import GamePageEnd from '@pages/GamePageEnd';
 import HomePage from '@pages/HomePage';
 import Layout from '@pages/Layout';
 
@@ -13,7 +14,10 @@ const Settings = lazy(() => import('@pages/Settings'));
 type Routes = {
   home: string;
   settings: string;
-  game: string;
+  game: {
+    id: string;
+    end: string;
+  };
   history: string;
   rules: string;
 };
@@ -21,7 +25,10 @@ type Routes = {
 export const routes: Routes = {
   home: '/',
   settings: '/settings',
-  game: '/g/:gameId',
+  game: {
+    id: '/g/:gameId',
+    end: '/g/:gameId/end',
+  },
   history: '/history',
   rules: '/rules',
 };
@@ -40,8 +47,12 @@ export const router = createBrowserRouter([
         element: <Settings />,
       },
       {
-        path: routes.game,
+        path: routes.game.id,
         element: <GamePage />,
+      },
+      {
+        path: routes.game.end,
+        element: <GamePageEnd />,
       },
       {
         path: routes.history,

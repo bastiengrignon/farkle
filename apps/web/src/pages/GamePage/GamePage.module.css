@@ -1,6 +1,6 @@
 .gamePageContainer {
     display: flex;
     flex-direction: column;
-    /*padding: var(--mantine-spacing-md);*/
-    height: calc(100dvh - var(--app-shell-header-offset) - var(--app-shell-padding) - var(--app-shell-padding) - 60px) !important;
+    gap: var(--mantine-spacing-md);
+    height: calc(100dvh - var(--app-shell-header-offset) - calc(var(--app-shell-padding) * 2)) !important;
 }
