@@ -4,7 +4,7 @@ import { BackendFetch, DevTools, I18nextPlugin, Tolgee, withTolgee } from '@tolg
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-const NAMESPACES = ['common', 'settings'];
+const NAMESPACES = ['common', 'settings', 'leaderboard', 'game'];
 export const SUPPORTED_LANGUAGES = ['fr', 'en'] as const;
 
 type Namespace = (typeof NAMESPACES)[number];
@@ -50,10 +50,13 @@ withTolgee(i18n, tolgee)
     fallbackLng: 'fr',
     ns: NAMESPACES,
     defaultNS: 'common',
+    resources,
     interpolation: {
       escapeValue: false,
     },
     appendNamespaceToMissingKey: true,
+    saveMissing: false,
+    returnEmptyString: false,
   });
 
 export default i18n;
