@@ -16,14 +16,21 @@ const Layout: FC = () => {
   return (
     <AppShell 
       header={{ height: 60 }}
-      style={{ paddingTop: `calc(env(safe-area-inset-top) + var(--mantine-spacing-md))`, height: '100%' }}
+      style={{ height: '100%' }}
       padding="xs" 
       bg={colorScheme === 'dark' ? 'dark.5' : 'gray.2'}
       >
-      <AppShell.Header bg="blue.5" p="xs">
+      <AppShell.Header 
+        bg="blue.5" 
+        p="xs"
+        style={{
+          paddingTop: 'env(safe-area-inset-top)',
+          height: 'calc(60px + env(safe-area-inset-top))',
+        }}
+      >
         <Header />
       </AppShell.Header>
-      <AppShell.Main pos="relative" style={{ height: '100%' }}>
+      <AppShell.Main pos="relative" style={{ height: 'calc(100% - 60px - env(safe-area-inset-top))' }}>
         <Suspense fallback={<LoadingOverlay visible={isLoading} zIndex={1000} overlayProps={{ blur: 3 }} />}>
           <Outlet />
         </Suspense>

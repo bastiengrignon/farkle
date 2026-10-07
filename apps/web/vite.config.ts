@@ -38,7 +38,7 @@ const manifestConfig: Partial<ManifestOptions> = {
   theme_color: '#339AF0',
   background_color: '#E9ECEF',
   display: 'standalone',
-  display_override: ['fullscreen', 'minimal-ui', 'window-controls-overlay'],
+  display_override: ['window-controls-overlay', 'fullscreen', 'minimal-ui'],
   start_url: '/',
   protocol_handlers: [],
   screenshots: [
