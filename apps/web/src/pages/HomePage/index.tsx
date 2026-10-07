@@ -50,7 +50,7 @@ export const HomePage = () => {
   );
 
   return (
-    <Container size="md" py="xl">
+    <Container size="md" py="xl" style={{ height: '100%' }}>
       <Group gap="md" justify="center">
         {features.map((feature) => (
           <Paper
