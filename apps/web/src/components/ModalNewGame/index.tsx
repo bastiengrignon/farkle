@@ -18,7 +18,8 @@ interface ModalNewGameProps {
 
 const ModalNewGame: FC<ModalNewGameProps> = ({ opened, close }) => {
   const { t } = useTranslation('game');
-  const { newGameForm, resetFormOnClose, handleSubmitNewGame, handleReorderPlayers } = useModalNewGameHooks({ t });
+  const { newGameForm, selectedPlayerCount, resetFormOnClose, handleSubmitNewGame, handleReorderPlayers } =
+    useModalNewGameHooks({ t });
 
   return (
     <Modal opened={opened} onClose={close} onExitTransitionEnd={resetFormOnClose} title={t('newGame.title')} size="sm">
@@ -29,6 +30,7 @@ const ModalNewGame: FC<ModalNewGameProps> = ({ opened, close }) => {
               onClick={() =>
                 newGameForm.insertListItem('players', {
                   id: uuidv4(),
+                  selected: true,
                   name: '',
                   score: 0,
                   previewScore: 0,
@@ -39,7 +41,7 @@ const ModalNewGame: FC<ModalNewGameProps> = ({ opened, close }) => {
             >
               {t('newGame.addPlayer')}
             </Button>
-            {newGameForm.values.players.length < 2 && (
+            {selectedPlayerCount < 2 && (
               <Text mt="xs" size="xs" c="red">
                 {t('newGame.twoPlayersMinimum')}
               </Text>
@@ -52,13 +54,18 @@ const ModalNewGame: FC<ModalNewGameProps> = ({ opened, close }) => {
               ))}
             </Stack>
           </DragDropProvider>
-          <NumberInput thousandSeparator=" " step={50} {...newGameForm.getInputProps('scoreToReach')} />
+          <NumberInput
+            label={t('leaderboard:leaderboard.scoreToReach')}
+            thousandSeparator=" "
+            step={50}
+            {...newGameForm.getInputProps('scoreToReach')}
+          />
           <Switch
             {...newGameForm.getInputProps('exactScoreRequired', { type: 'checkbox' })}
             label={t('newGame.exactScoreRequired')}
           />
           <Flex justify="flex-end">
-            <Button type="submit" disabled={newGameForm.values.players.length < 2} rightSection={<TbDice1 />}>
+            <Button type="submit" disabled={selectedPlayerCount < 2} rightSection={<TbDice1 />}>
               {t('newGame.start')}
             </Button>
           </Flex>
