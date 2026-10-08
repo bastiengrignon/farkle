@@ -4,6 +4,8 @@ import type { PodiumWinner } from '@farkle/core';
 import { sortDirections, useSortTable } from '@hooks/datatable';
 import { useFarkleStore } from '@store/farkle';
 
+import { getMostFarklesInARow, getMostFarklesInOneGame } from './Leaderboard.stats';
+
 export const useLeaderboardHooks = () => {
   const finishedGames = useFarkleStore((state) => state.finishedGames);
 
@@ -46,74 +48,6 @@ export const useLeaderboardHooks = () => {
     [finishedGames]
   );
 
-  /*
-  const gameRoundStats = useMemo(() => {
-    const gameRounds = finishedGames.map((game) => ({
-      gameId: game.id,
-      roundCount: game.turnHistory.length,
-    }));
-
-    if (gameRounds.length === 0) {
-      return { mostRounds: null, leastRounds: null };
-    }
-
-    const sortedByRounds = [...gameRounds].sort((a, b) => b.roundCount - a.roundCount);
-    const mostRounds = sortedByRounds[0];
-    const leastRounds = sortedByRounds[sortedByRounds.length - 1];
-
-    return { mostRounds, leastRounds };
-  }, [finishedGames]);
-*/
-
-  const mostFarklesInARow = useMemo(() => {
-    const playerFarkleStreaks: Record<string, number> = {};
-
-    finishedGames.forEach((game) => {
-      let currentStreak: Record<string, number> = {};
-
-      game.turnHistory.forEach((turn) => {
-        if (turn.isFarkle) {
-          currentStreak[turn.playerName] = (currentStreak[turn.playerName] || 0) + 1;
-        } else {
-          currentStreak = {};
-        }
-      });
-
-      Object.entries(currentStreak).forEach(([playerName, streak]) => {
-        if (!playerFarkleStreaks[playerName] || streak > playerFarkleStreaks[playerName]) {
-          playerFarkleStreaks[playerName] = streak;
-        }
-      });
-    });
-
-    return Object.entries(playerFarkleStreaks)
-      .map(([name, count]) => ({ name, count }))
-      .sort((a, b) => b.count - a.count);
-  }, [finishedGames]);
-
-  const mostFarklesInOneGame = useMemo(() => {
-    const playerFarklesPerGame: Record<string, number> = {};
-
-    finishedGames.forEach((game) => {
-      const gameFarkles: Record<string, number> = {};
-      game.turnHistory.forEach((turn) => {
-        if (turn.isFarkle) {
-          gameFarkles[turn.playerName] = (gameFarkles[turn.playerName] || 0) + 1;
-        }
-      });
-
-      Object.entries(gameFarkles).forEach(([playerName, count]) => {
-        if (!playerFarklesPerGame[playerName] || count > playerFarklesPerGame[playerName]) {
-          playerFarklesPerGame[playerName] = count;
-        }
-      });
-    });
-
-    return Object.entries(playerFarklesPerGame)
-      .map(([name, count]) => ({ name, count }))
-      .sort((a, b) => b.count - a.count);
-  }, [finishedGames]);
-
   const {
     sortedRecords: sortedFinishedGames,
     sortStatus,
@@ -128,8 +62,8 @@ export const useLeaderboardHooks = () => {
     sortedFinishedGames,
     topWinners,
     mostFarklers,
-    mostFarklesInOneGame,
-    mostFarklesInARow,
+    mostFarklesInOneGame: getMostFarklesInOneGame(finishedGames),
+    mostFarklesInARow: getMostFarklesInARow(finishedGames),
     sortStatus,
     setSortStatus,
   };
