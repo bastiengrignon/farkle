@@ -10,6 +10,7 @@
       "switch": "Revert the player's score when matching another player",
       "title": "Matching player score"
     },
+    "saved": "Settings saved",
     "sixDiceFarkle": {
       "switch": "Award points",
       "title": "6-dice Farkle"

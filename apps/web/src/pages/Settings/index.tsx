@@ -24,11 +24,11 @@ import { useSettingsHooks } from './Settings.hooks';
 
 const Settings: FC = () => {
   const { t } = useTranslation('settings');
-  const { commonPlayers, settingsForm, handleSaveSettings, removeStoredPlayer } = useSettingsHooks();
+  const { commonPlayers, settingsForm, handleSaveSettings, removeStoredPlayer } = useSettingsHooks({ t });
 
   return (
     <PageLayout title={t('common:home.settings')}>
-      <form onSubmit={handleSaveSettings}>
+      <form onSubmit={settingsForm.onSubmit(handleSaveSettings)}>
         <Stack>
           <Fieldset legend={t('settings.minimumFirstScore.title')}>
             <Stack>

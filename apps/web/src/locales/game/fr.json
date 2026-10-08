@@ -6,7 +6,8 @@
     }
   },
   "finished": {
-    "winner_one": "Gagnant"
+    "winner_one": "Gagnant",
+    "winner_other": "Gagnants"
   },
   "keyboard": {
     "bank": "Banque",

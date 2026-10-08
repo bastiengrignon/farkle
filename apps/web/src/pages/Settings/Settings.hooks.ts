@@ -1,9 +1,18 @@
+import { useCallback } from 'react';
+
+import type { TFunction } from 'i18next';
+
 import { useForm } from '@mantine/form';
+import { notifications } from '@mantine/notifications';
 
 import { type FarkleSettings, TRIPLE_ONE_SCORE_OPTIONS } from '@farkle/core';
 import { useFarkleStore } from '@store/farkle';
 
-export const useSettingsHooks = () => {
+interface UseSettingsHooksProps {
+  t: TFunction;
+}
+
+export const useSettingsHooks = ({ t }: UseSettingsHooksProps) => {
   const commonPlayers = useFarkleStore((state) => state.players);
   const settings = useFarkleStore((state) => state.settings);
   const removeStoredPlayer = useFarkleStore((state) => state.removeStoredPlayer);
@@ -35,10 +44,23 @@ export const useSettingsHooks = () => {
     },
   });
 
+  const handleSaveSettings = useCallback(
+    (values: FarkleSettings) => {
+      updateSettings(values);
+      notifications.show({
+        message: t('settings.saved'),
+        autoClose: 3000,
+        position: 'top-center',
+        color: 'green',
+      });
+    },
+    [updateSettings, t]
+  );
+
   return {
     commonPlayers,
     settingsForm,
-    handleSaveSettings: settingsForm.onSubmit(updateSettings),
+    handleSaveSettings,
     removeStoredPlayer,
   };
 };
