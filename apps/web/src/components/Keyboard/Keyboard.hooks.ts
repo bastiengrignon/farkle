@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import { canBankScore } from '@farkle/core';
 import { useFarkleStore } from '@store/farkle';
 
 export const useKeyboardHooks = () => {
@@ -11,16 +12,17 @@ export const useKeyboardHooks = () => {
 
   const canCurrentPlayerScore = useMemo(() => {
     const currentPlayer = game?.players.find((player) => player.id === game?.currentPlayerIdTurn);
-    return Boolean(
-      currentPlayer &&
-        game &&
-        currentPlayer.previewScore > 0 &&
-        (!game.exactScoreRequired || currentPlayer.score + currentPlayer.previewScore <= game.scoreToReach)
-    );
-  }, [game]);
+    return canBankScore(game, settings, currentPlayer?.previewScore ?? 0);
+  }, [game, settings]);
+
+  const canCurrentPlayerSixDiceFarkle = useMemo(
+    () => settings.sixDiceFarkle.enabled && canBankScore(game, settings, settings.sixDiceFarkle.score),
+    [game, settings]
+  );
 
   return {
     canCurrentPlayerScore,
+    canCurrentPlayerSixDiceFarkle,
     settings,
     farkle,
     sixDiceFarkle,

@@ -13,7 +13,8 @@ import { useKeyboardHooks } from './Keyboard.hooks';
 
 const Keyboard: FC = () => {
   const { t } = useTranslation('game');
-  const { canCurrentPlayerScore, settings, farkle, sixDiceFarkle, bank } = useKeyboardHooks();
+  const { canCurrentPlayerScore, canCurrentPlayerSixDiceFarkle, settings, farkle, sixDiceFarkle, bank } =
+    useKeyboardHooks();
   return (
     <Box>
       <ScorePreview />
@@ -26,7 +27,7 @@ const Keyboard: FC = () => {
       <Space h="sm" />
       <Flex gap="sm" justify="space-between">
         {settings.sixDiceFarkle.enabled && (
-          <Button color="red" onClick={sixDiceFarkle}>
+          <Button color="red" onClick={sixDiceFarkle} disabled={!canCurrentPlayerSixDiceFarkle}>
             <TbNumber6 size={48} />
           </Button>
         )}

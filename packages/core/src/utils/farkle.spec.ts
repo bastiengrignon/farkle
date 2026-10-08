@@ -1,6 +1,15 @@
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import type { Game, GamePlayer } from '../types';
-import { advanceTurn, FARKLE_SCORES, getNextPlayerId, hasReachedWinningScore } from './farkle';
+import {
+  advanceTurn,
+  type BankScoreState,
+  bankScore,
+  canBankScore,
+  DEFAULT_FARKLE_SETTINGS,
+  FARKLE_SCORES,
+  getNextPlayerId,
+  hasReachedWinningScore,
+} from './farkle';
 
 const STUB_PLAYERS: GamePlayer[] = [
   {
@@ -137,5 +146,133 @@ describe('farkle tests', () => {
     it('should return 1500 if dice number is 1', () => {
       expect(FARKLE_SCORES.FOUR_DICE(1)).toBe(1500);
     });
+  });
+});
+
+let state: BankScoreState;
+const setState = (changes: Partial<BankScoreState>) => {
+  state = { ...state, ...changes };
+};
+
+const game: Game = {
+  id: 'game',
+  currentPlayerIdTurn: 'first',
+  scoreToReach: 1000,
+  exactScoreRequired: true,
+  players: ['first', 'second'].map((id) => ({
+    id,
+    name: id,
+    score: 0,
+    previewScore: 500,
+    hasScored: false,
+    consecutiveFarkles: 2,
+  })),
+};
+
+beforeEach(() => {
+  setState({
+    game: structuredClone(game),
+    settings: {
+      ...DEFAULT_FARKLE_SETTINGS,
+      sixDiceFarkle: { enabled: true, score: 500 },
+      revertPlayerScoreOnSameScore: true,
+    },
+    history: [],
+    turnHistory: [],
+  });
+});
+
+const updateGame = (changes: Partial<Game>) => {
+  setState({ game: { ...game, ...state.game, ...changes } });
+};
+
+describe.each(['bank', 'sixDiceFarkle'] as const)('%s scoring rules', (action) => {
+  const score = () => {
+    const amount =
+      action === 'sixDiceFarkle'
+        ? state.settings.sixDiceFarkle.score
+        : (state.game?.players.find((player) => player.id === state.game?.currentPlayerIdTurn)?.previewScore ?? 0);
+    const result = bankScore(state, amount, action === 'sixDiceFarkle');
+    if (result !== state) setState(result);
+  };
+
+  it('rejects a first score below the minimum without changing history or turn', () => {
+    setState({
+      settings: { ...state.settings, minimumFirstScore: { enabled: true, score: 600 } },
+    });
+    const before = state;
+    expect(canBankScore(before.game, before.settings, 500)).toBe(false);
+    score();
+    expect(state).toBe(before);
+  });
+
+  it('allows the minimum first score and records only the banked amount', () => {
+    score();
+    expect(state.game?.players[0]).toMatchObject({
+      score: 500,
+      previewScore: 0,
+      hasScored: true,
+      consecutiveFarkles: 0,
+    });
+    expect(state.game?.currentPlayerIdTurn).toBe('second');
+    expect(state.turnHistory[0]).toMatchObject({ scoreBanked: 500, isFarkle: false });
+    expect(state.turnHistory[0].isSixDiceFarkle).toBe(action === 'sixDiceFarkle' ? true : undefined);
+  });
+
+  it('allows a smaller score after the player has already scored', () => {
+    updateGame({ players: [{ ...game.players[0], score: 100, hasScored: true }, game.players[1]] });
+    setState({
+      settings: { ...state.settings, minimumFirstScore: { enabled: true, score: 600 } },
+    });
+    score();
+    expect(state.game?.players[0].score).toBe(600);
+  });
+
+  it('rejects exceeding the exact winning score', () => {
+    updateGame({ players: [{ ...game.players[0], score: 600, hasScored: true }, game.players[1]] });
+    const before = state;
+    expect(canBankScore(before.game, before.settings, 500)).toBe(false);
+    score();
+    expect(state).toBe(before);
+  });
+
+  it.each([true, false])('starts the final round when reaching the target (exact: %s)', (exactScoreRequired) => {
+    updateGame({ exactScoreRequired, players: [{ ...game.players[0], score: 500, hasScored: true }, game.players[1]] });
+    score();
+    expect(state.game).toMatchObject({ finalRoundStartedByPlayerId: 'first', isFinished: false });
+    updateGame({
+      players: state.game?.players.map((player) => ({ ...player, previewScore: 500 })),
+    });
+    score();
+    expect(state.game).toMatchObject({ isFinished: true, currentPlayerIdTurn: null });
+  });
+
+  it('allows exceeding the target when exact score is disabled', () => {
+    updateGame({
+      exactScoreRequired: false,
+      players: [{ ...game.players[0], score: 600, hasScored: true }, game.players[1]],
+    });
+    score();
+    expect(state.game).toMatchObject({ finalRoundStartedByPlayerId: 'first' });
+    expect(state.game?.players[0].score).toBe(1100);
+  });
+
+  it('reverts a matching opponent to their most recent different score and preserves history', () => {
+    updateGame({ players: [game.players[0], { ...game.players[1], score: 500, hasScored: true }] });
+    setState({ history: [{ ...game, players: [game.players[0], { ...game.players[1], score: 200 }] }] });
+    const before = state.game;
+    score();
+    expect(state.game?.players[1].score).toBe(200);
+    expect(state.history.at(-1)).toEqual(before);
+  });
+
+  it('does not revert matching scores during the final round', () => {
+    updateGame({
+      finalRoundStartedByPlayerId: 'second',
+      players: [game.players[0], { ...game.players[1], score: 500 }],
+    });
+    setState({ history: [game] });
+    score();
+    expect(state.game?.players[1].score).toBe(500);
   });
 });

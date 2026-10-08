@@ -21,7 +21,7 @@ export const useScorePreviewHooks = () => {
   const minimumFirstScoreValue = settings.minimumFirstScore.score;
 
   const isFirstScore = useMemo(
-    () => currentPlayer && currentPlayer.score === 0 && currentPlayer.previewScore > 0,
+    () => currentPlayer && !currentPlayer.hasScored && currentPlayer.previewScore > 0,
     [currentPlayer]
   );
 

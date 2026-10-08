@@ -5,12 +5,12 @@ import { notifications } from '@mantine/notifications';
 
 import {
   advanceTurn,
+  bankScore,
   DEFAULT_FARKLE_SETTINGS,
   type FarkleState,
   type FinishedGame,
   type Game,
   getOrCreateArray,
-  hasReachedWinningScore,
   type TurnResult,
 } from '@farkle/core';
 
@@ -169,146 +169,15 @@ export const useFarkleStore = create<FarkleState>()(
           }),
         sixDiceFarkle: () =>
           set((state) => {
-            if (
-              !state.game ||
-              state.game.isFinished ||
-              !state.game.currentPlayerIdTurn ||
-              !state.settings.sixDiceFarkle.enabled
-            ) {
+            if (!state.settings.sixDiceFarkle.enabled) {
               return state;
             }
-            const currentPlayerId = state.game.currentPlayerIdTurn;
-            const currentPlayer = state.game.players.find((player) => player.id === currentPlayerId);
-
-            const newTurnResult: TurnResult = {
-              playerId: currentPlayerId,
-              playerName: currentPlayer?.name || 'Unknown',
-              scoreBanked: state.settings.sixDiceFarkle.score,
-              isSixDiceFarkle: true,
-              isFarkle: false,
-              timestamp: Date.now(),
-            };
-            const players = state.game.players.map((player) =>
-              player.id === currentPlayerId
-                ? {
-                    ...player,
-                    score: player.score + state.settings.sixDiceFarkle.score,
-                    previewScore: 0,
-                    hasScored: player.score === 0 ? true : player.hasScored,
-                    consecutiveFarkles: 0,
-                  }
-                : player
-            );
-
-            return {
-              history: [...getOrCreateArray<Game[]>(state.history), state.game],
-              turnHistory: [...(state.turnHistory || []), newTurnResult],
-              game: {
-                ...state.game,
-                ...advanceTurn(state.game),
-                players,
-              },
-            };
+            return bankScore(state, state.settings.sixDiceFarkle.score, true, notifications, i18n.t);
           }),
         bank: () =>
           set((state) => {
-            if (!state.game || state.game.isFinished || !state.game.currentPlayerIdTurn) {
-              return state;
-            }
-
-            const currentPlayerId = state.game.currentPlayerIdTurn;
-            const currentPlayer = state.game.players.find((player) => player.id === currentPlayerId);
-
-            if (!currentPlayer) {
-              return state;
-            }
-
-            const isMinimumFirstScoreEnabled = state.settings.minimumFirstScore.enabled;
-            const minimumFirstScoreValue = state.settings.minimumFirstScore.score;
-            const isFirstScore = currentPlayer.score === 0 && currentPlayer.previewScore > 0;
-
-            if (isMinimumFirstScoreEnabled && isFirstScore && currentPlayer.previewScore < minimumFirstScoreValue) {
-              notifications.show({
-                title: i18n.t('game:bank.error.title'),
-                message: i18n.t('game:bank.error.message', { minimum: minimumFirstScoreValue }),
-                position: 'top-center',
-                color: 'red',
-              });
-              return state;
-            }
-
-            const scoreBanked = currentPlayer.previewScore;
-            const currentPlayerNewScore = currentPlayer.score + currentPlayer.previewScore;
-            let players = state.game.players.map((player) =>
-              player.id === currentPlayerId
-                ? {
-                    ...player,
-                    score: currentPlayerNewScore,
-                    previewScore: 0,
-                    hasScored: player.score === 0 ? true : player.hasScored,
-                    consecutiveFarkles: 0,
-                  }
-                : player
-            );
-
-            const updatedPlayer = players.find((player) => player.id === currentPlayerId);
-            const startsFinalRound =
-              !state.game.finalRoundStartedByPlayerId &&
-              Boolean(updatedPlayer && hasReachedWinningScore(state.game, updatedPlayer.score));
-            const gameWithFinalRound = startsFinalRound
-              ? { ...state.game, finalRoundStartedByPlayerId: currentPlayerId }
-              : state.game;
-            if (startsFinalRound) {
-              notifications.show({
-                title: i18n.t('game:lastRound.title'),
-                message: i18n.t('game:lastRound.message'),
-                position: 'top-center',
-                color: 'orange',
-              });
-            }
-
-            if (state.settings.revertPlayerScoreOnSameScore && !state.game.finalRoundStartedByPlayerId) {
-              const history = getOrCreateArray<Game[]>(state.history);
-              players = players.map((player) => {
-                if (player.id === currentPlayerId) {
-                  return player;
-                }
-                if (player.score === currentPlayerNewScore) {
-                  notifications.show({
-                    title: i18n.t('settings:settings.revertPlayerScoreOnSameScore.title'),
-                    message: i18n.t('settings:settings.revertPlayerScoreOnSameScore.alertMesage'),
-                    position: 'top-center',
-                    color: 'orange',
-                    autoClose: 6000,
-                  });
-                  const previousGame = history.findLast((game) => {
-                    const prevPlayer = game.players.find((p) => p.id === player.id);
-                    return prevPlayer && prevPlayer.score !== player.score;
-                  });
-                  const previousPlayer = previousGame?.players.find((p) => p.id === player.id);
-                  return previousPlayer ? { ...player, score: previousPlayer.score } : player;
-                }
-                return player;
-              });
-            }
-
-            const newTurnResult: TurnResult = {
-              playerId: currentPlayerId,
-              playerName: currentPlayer.name,
-              scoreBanked,
-              isFarkle: false,
-              timestamp: Date.now(),
-            };
-
-            return {
-              history: [...getOrCreateArray<Game[]>(state.history), state.game],
-              turnHistory: [...(state.turnHistory || []), newTurnResult],
-              game: {
-                ...gameWithFinalRound,
-                ...advanceTurn(gameWithFinalRound),
-                players,
-              },
-            };
+            const currentPlayer = state.game?.players.find((player) => player.id === state.game?.currentPlayerIdTurn);
+            return bankScore(state, currentPlayer?.previewScore ?? 0, false, notifications, i18n.t);
           }),
         removeStoredPlayer: (playerName: string) =>
           set((state) => ({
