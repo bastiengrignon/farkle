@@ -81,6 +81,7 @@ const manifestConfig: Partial<ManifestOptions> = {
       purpose: 'maskable',
     },
   ],
+  orientation: 'portrait',
 };
 
 const workboxConfig: Partial<GenerateSWOptions> = {
