@@ -15,6 +15,7 @@ import {
 } from '@farkle/core';
 
 import i18n from '../i18n/config';
+import { farkleCacheStorage } from '../utils/cacheStorage';
 
 export const useFarkleStore = create<FarkleState>()(
   devtools(
@@ -210,6 +211,7 @@ export const useFarkleStore = create<FarkleState>()(
       }),
       {
         name: 'farkle-storage',
+        storage: farkleCacheStorage,
         merge: (persistedState, currentState) => {
           const persisted = persistedState as Partial<FarkleState>;
 
